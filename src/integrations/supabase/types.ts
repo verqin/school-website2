@@ -668,6 +668,225 @@ export type Database = {
           },
         ]
       }
+      assessment_results: {
+        Row: {
+          assessment_id: string
+          comment: string | null
+          created_at: string
+          id: string
+          mark: number | null
+          recorded_by: string | null
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          assessment_id: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          mark?: number | null
+          recorded_by?: string | null
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          assessment_id?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          mark?: number | null
+          recorded_by?: string | null
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_results_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "assessments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessment_results_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assessments: {
+        Row: {
+          academic_year_id: string | null
+          assessment_date: string | null
+          assessment_type: Database["public"]["Enums"]["assessment_type"]
+          class_id: string
+          created_at: string
+          id: string
+          max_mark: number
+          name: string
+          staff_id: string | null
+          state: Database["public"]["Enums"]["publication_state"]
+          subject_id: string
+          term_id: string | null
+          updated_at: string
+          weight: number
+        }
+        Insert: {
+          academic_year_id?: string | null
+          assessment_date?: string | null
+          assessment_type?: Database["public"]["Enums"]["assessment_type"]
+          class_id: string
+          created_at?: string
+          id?: string
+          max_mark: number
+          name: string
+          staff_id?: string | null
+          state?: Database["public"]["Enums"]["publication_state"]
+          subject_id: string
+          term_id?: string | null
+          updated_at?: string
+          weight?: number
+        }
+        Update: {
+          academic_year_id?: string | null
+          assessment_date?: string | null
+          assessment_type?: Database["public"]["Enums"]["assessment_type"]
+          class_id?: string
+          created_at?: string
+          id?: string
+          max_mark?: number
+          name?: string
+          staff_id?: string | null
+          state?: Database["public"]["Enums"]["publication_state"]
+          subject_id?: string
+          term_id?: string | null
+          updated_at?: string
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessments_academic_year_id_fkey"
+            columns: ["academic_year_id"]
+            isOneToOne: false
+            referencedRelation: "academic_years"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessments_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessments_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessments_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessments_term_id_fkey"
+            columns: ["term_id"]
+            isOneToOne: false
+            referencedRelation: "terms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      attendance_records: {
+        Row: {
+          academic_year_id: string | null
+          attendance_date: string
+          class_id: string
+          created_at: string
+          id: string
+          reason: string | null
+          recorded_by: string | null
+          session_label: string
+          status: Database["public"]["Enums"]["attendance_status"]
+          student_id: string
+          subject_id: string | null
+          term_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          academic_year_id?: string | null
+          attendance_date: string
+          class_id: string
+          created_at?: string
+          id?: string
+          reason?: string | null
+          recorded_by?: string | null
+          session_label?: string
+          status: Database["public"]["Enums"]["attendance_status"]
+          student_id: string
+          subject_id?: string | null
+          term_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          academic_year_id?: string | null
+          attendance_date?: string
+          class_id?: string
+          created_at?: string
+          id?: string
+          reason?: string | null
+          recorded_by?: string | null
+          session_label?: string
+          status?: Database["public"]["Enums"]["attendance_status"]
+          student_id?: string
+          subject_id?: string | null
+          term_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attendance_records_academic_year_id_fkey"
+            columns: ["academic_year_id"]
+            isOneToOne: false
+            referencedRelation: "academic_years"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attendance_records_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attendance_records_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attendance_records_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attendance_records_term_id_fkey"
+            columns: ["term_id"]
+            isOneToOne: false
+            referencedRelation: "terms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       classes: {
         Row: {
           academic_year_id: string
@@ -924,6 +1143,204 @@ export type Database = {
         }
         Relationships: []
       }
+      examination_papers: {
+        Row: {
+          class_id: string | null
+          created_at: string
+          end_time: string | null
+          examination_id: string
+          grade_level_id: string | null
+          id: string
+          invigilator_id: string | null
+          max_mark: number
+          paper_date: string | null
+          room: string | null
+          start_time: string | null
+          subject_id: string
+          updated_at: string
+        }
+        Insert: {
+          class_id?: string | null
+          created_at?: string
+          end_time?: string | null
+          examination_id: string
+          grade_level_id?: string | null
+          id?: string
+          invigilator_id?: string | null
+          max_mark?: number
+          paper_date?: string | null
+          room?: string | null
+          start_time?: string | null
+          subject_id: string
+          updated_at?: string
+        }
+        Update: {
+          class_id?: string | null
+          created_at?: string
+          end_time?: string | null
+          examination_id?: string
+          grade_level_id?: string | null
+          id?: string
+          invigilator_id?: string | null
+          max_mark?: number
+          paper_date?: string | null
+          room?: string | null
+          start_time?: string | null
+          subject_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "examination_papers_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "examination_papers_examination_id_fkey"
+            columns: ["examination_id"]
+            isOneToOne: false
+            referencedRelation: "examinations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "examination_papers_grade_level_id_fkey"
+            columns: ["grade_level_id"]
+            isOneToOne: false
+            referencedRelation: "grade_levels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "examination_papers_invigilator_id_fkey"
+            columns: ["invigilator_id"]
+            isOneToOne: false
+            referencedRelation: "staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "examination_papers_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      examination_results: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          comment: string | null
+          created_at: string
+          grade_label: string | null
+          id: string
+          mark: number | null
+          paper_id: string
+          recorded_by: string | null
+          state: Database["public"]["Enums"]["publication_state"]
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          comment?: string | null
+          created_at?: string
+          grade_label?: string | null
+          id?: string
+          mark?: number | null
+          paper_id: string
+          recorded_by?: string | null
+          state?: Database["public"]["Enums"]["publication_state"]
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          comment?: string | null
+          created_at?: string
+          grade_label?: string | null
+          id?: string
+          mark?: number | null
+          paper_id?: string
+          recorded_by?: string | null
+          state?: Database["public"]["Enums"]["publication_state"]
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "examination_results_paper_id_fkey"
+            columns: ["paper_id"]
+            isOneToOne: false
+            referencedRelation: "examination_papers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "examination_results_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      examinations: {
+        Row: {
+          academic_year_id: string
+          created_at: string
+          description: string | null
+          ends_on: string | null
+          id: string
+          name: string
+          starts_on: string | null
+          state: Database["public"]["Enums"]["publication_state"]
+          term_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          academic_year_id: string
+          created_at?: string
+          description?: string | null
+          ends_on?: string | null
+          id?: string
+          name: string
+          starts_on?: string | null
+          state?: Database["public"]["Enums"]["publication_state"]
+          term_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          academic_year_id?: string
+          created_at?: string
+          description?: string | null
+          ends_on?: string | null
+          id?: string
+          name?: string
+          starts_on?: string | null
+          state?: Database["public"]["Enums"]["publication_state"]
+          term_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "examinations_academic_year_id_fkey"
+            columns: ["academic_year_id"]
+            isOneToOne: false
+            referencedRelation: "academic_years"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "examinations_term_id_fkey"
+            columns: ["term_id"]
+            isOneToOne: false
+            referencedRelation: "terms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       gallery_albums: {
         Row: {
           cover_image_url: string | null
@@ -1033,6 +1450,80 @@ export type Database = {
           min_age?: number | null
           name?: string
           sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      grading_bands: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          label: string
+          max_percentage: number
+          min_percentage: number
+          points: number | null
+          scale_id: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          label: string
+          max_percentage: number
+          min_percentage: number
+          points?: number | null
+          scale_id: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          label?: string
+          max_percentage?: number
+          min_percentage?: number
+          points?: number | null
+          scale_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grading_bands_scale_id_fkey"
+            columns: ["scale_id"]
+            isOneToOne: false
+            referencedRelation: "grading_scales"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      grading_scales: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          is_default: boolean
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          is_default?: boolean
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          is_default?: boolean
+          name?: string
           updated_at?: string
         }
         Relationships: []
@@ -1276,6 +1767,159 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      report_card_subject_results: {
+        Row: {
+          created_at: string
+          grade_label: string | null
+          id: string
+          mark: number | null
+          max_mark: number
+          percentage: number | null
+          report_card_id: string
+          staff_id: string | null
+          subject_id: string
+          teacher_comment: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          grade_label?: string | null
+          id?: string
+          mark?: number | null
+          max_mark?: number
+          percentage?: number | null
+          report_card_id: string
+          staff_id?: string | null
+          subject_id: string
+          teacher_comment?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          grade_label?: string | null
+          id?: string
+          mark?: number | null
+          max_mark?: number
+          percentage?: number | null
+          report_card_id?: string
+          staff_id?: string | null
+          subject_id?: string
+          teacher_comment?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_card_subject_results_report_card_id_fkey"
+            columns: ["report_card_id"]
+            isOneToOne: false
+            referencedRelation: "report_cards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "report_card_subject_results_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "report_card_subject_results_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      report_cards: {
+        Row: {
+          academic_year_id: string
+          approved_by: string | null
+          attendance_present: number | null
+          attendance_total: number | null
+          class_id: string | null
+          class_teacher_comment: string | null
+          created_at: string
+          id: string
+          overall_grade: string | null
+          overall_percentage: number | null
+          principal_comment: string | null
+          published_at: string | null
+          state: Database["public"]["Enums"]["publication_state"]
+          student_id: string
+          submitted_by: string | null
+          term_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          academic_year_id: string
+          approved_by?: string | null
+          attendance_present?: number | null
+          attendance_total?: number | null
+          class_id?: string | null
+          class_teacher_comment?: string | null
+          created_at?: string
+          id?: string
+          overall_grade?: string | null
+          overall_percentage?: number | null
+          principal_comment?: string | null
+          published_at?: string | null
+          state?: Database["public"]["Enums"]["publication_state"]
+          student_id: string
+          submitted_by?: string | null
+          term_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          academic_year_id?: string
+          approved_by?: string | null
+          attendance_present?: number | null
+          attendance_total?: number | null
+          class_id?: string | null
+          class_teacher_comment?: string | null
+          created_at?: string
+          id?: string
+          overall_grade?: string | null
+          overall_percentage?: number | null
+          principal_comment?: string | null
+          published_at?: string | null
+          state?: Database["public"]["Enums"]["publication_state"]
+          student_id?: string
+          submitted_by?: string | null
+          term_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_cards_academic_year_id_fkey"
+            columns: ["academic_year_id"]
+            isOneToOne: false
+            referencedRelation: "academic_years"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "report_cards_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "report_cards_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "report_cards_term_id_fkey"
+            columns: ["term_id"]
+            isOneToOne: false
+            referencedRelation: "terms"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       role_permissions: {
         Row: {
@@ -1828,6 +2472,10 @@ export type Database = {
       current_guardian_id: { Args: never; Returns: string }
       current_staff_id: { Args: never; Returns: string }
       current_student_id: { Args: never; Returns: string }
+      grade_for_percentage: {
+        Args: { _percentage: number; _scale_id?: string }
+        Returns: string
+      }
       has_permission: {
         Args: { _permission: string; _user_id: string }
         Returns: boolean
