@@ -1144,7 +1144,21 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "editor" | "viewer"
+      app_role:
+        | "admin"
+        | "editor"
+        | "viewer"
+        | "super_admin"
+        | "administrator"
+        | "principal"
+        | "deputy_principal"
+        | "admissions_officer"
+        | "finance_officer"
+        | "teacher"
+        | "class_teacher"
+        | "librarian"
+        | "parent"
+        | "student"
       application_status:
         | "draft"
         | "submitted"
@@ -1156,8 +1170,55 @@ export type Database = {
         | "waitlisted"
         | "rejected"
         | "withdrawn"
+      assessment_type:
+        | "quiz"
+        | "test"
+        | "assignment"
+        | "project"
+        | "continuous"
+        | "practical"
+        | "other"
+      attendance_status: "present" | "absent" | "late" | "excused"
+      audience_scope:
+        | "everyone"
+        | "parents"
+        | "students"
+        | "teachers"
+        | "staff"
+        | "grade"
+        | "class"
+      discipline_status:
+        | "open"
+        | "under_review"
+        | "resolved"
+        | "escalated"
+        | "closed"
       document_status: "pending" | "verified" | "rejected"
+      enrollment_stage:
+        | "pending"
+        | "documentation"
+        | "requirements"
+        | "confirmed"
+        | "active"
+        | "paused"
+        | "rejected"
+        | "completed"
+      guardian_relationship:
+        | "mother"
+        | "father"
+        | "guardian"
+        | "grandparent"
+        | "sibling"
+        | "other"
       interview_status: "scheduled" | "completed" | "cancelled" | "no_show"
+      invoice_status:
+        | "draft"
+        | "issued"
+        | "partially_paid"
+        | "paid"
+        | "overdue"
+        | "cancelled"
+      loan_status: "borrowed" | "returned" | "overdue" | "lost"
       payment_status:
         | "unpaid"
         | "pending"
@@ -1165,6 +1226,22 @@ export type Database = {
         | "failed"
         | "waived"
         | "refunded"
+      publication_state:
+        | "draft"
+        | "submitted"
+        | "reviewed"
+        | "approved"
+        | "published"
+        | "unpublished"
+      student_status:
+        | "applicant"
+        | "enrolled"
+        | "active"
+        | "suspended"
+        | "transferred"
+        | "graduated"
+        | "withdrawn"
+        | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1292,7 +1369,22 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "editor", "viewer"],
+      app_role: [
+        "admin",
+        "editor",
+        "viewer",
+        "super_admin",
+        "administrator",
+        "principal",
+        "deputy_principal",
+        "admissions_officer",
+        "finance_officer",
+        "teacher",
+        "class_teacher",
+        "librarian",
+        "parent",
+        "student",
+      ],
       application_status: [
         "draft",
         "submitted",
@@ -1305,8 +1397,61 @@ export const Constants = {
         "rejected",
         "withdrawn",
       ],
+      assessment_type: [
+        "quiz",
+        "test",
+        "assignment",
+        "project",
+        "continuous",
+        "practical",
+        "other",
+      ],
+      attendance_status: ["present", "absent", "late", "excused"],
+      audience_scope: [
+        "everyone",
+        "parents",
+        "students",
+        "teachers",
+        "staff",
+        "grade",
+        "class",
+      ],
+      discipline_status: [
+        "open",
+        "under_review",
+        "resolved",
+        "escalated",
+        "closed",
+      ],
       document_status: ["pending", "verified", "rejected"],
+      enrollment_stage: [
+        "pending",
+        "documentation",
+        "requirements",
+        "confirmed",
+        "active",
+        "paused",
+        "rejected",
+        "completed",
+      ],
+      guardian_relationship: [
+        "mother",
+        "father",
+        "guardian",
+        "grandparent",
+        "sibling",
+        "other",
+      ],
       interview_status: ["scheduled", "completed", "cancelled", "no_show"],
+      invoice_status: [
+        "draft",
+        "issued",
+        "partially_paid",
+        "paid",
+        "overdue",
+        "cancelled",
+      ],
+      loan_status: ["borrowed", "returned", "overdue", "lost"],
       payment_status: [
         "unpaid",
         "pending",
@@ -1314,6 +1459,24 @@ export const Constants = {
         "failed",
         "waived",
         "refunded",
+      ],
+      publication_state: [
+        "draft",
+        "submitted",
+        "reviewed",
+        "approved",
+        "published",
+        "unpublished",
+      ],
+      student_status: [
+        "applicant",
+        "enrolled",
+        "active",
+        "suspended",
+        "transferred",
+        "graduated",
+        "withdrawn",
+        "archived",
       ],
     },
   },
