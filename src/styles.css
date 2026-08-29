@@ -1,0 +1,194 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --font-sans: var(--font-sans);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy-soft: var(--navy-soft);
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-forest-soft: var(--forest-soft);
+  --color-gold: var(--gold);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.75rem;
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Sample1 School brand */
+  --navy: #1e3a8a;
+  --navy-deep: #16306e;
+  --navy-soft: #eef2fd;
+  --forest: #047857;
+  --forest-deep: #036347;
+  --forest-soft: #e8f6f0;
+  --gold: #b45309;
+
+  --background: #ffffff;
+  --foreground: #101828;
+  --card: #ffffff;
+  --card-foreground: #101828;
+  --popover: #ffffff;
+  --popover-foreground: #101828;
+  --primary: var(--navy);
+  --primary-foreground: #ffffff;
+  --secondary: var(--forest);
+  --secondary-foreground: #ffffff;
+  --muted: #f4f6fb;
+  --muted-foreground: #4b5565;
+  --accent: var(--forest-soft);
+  --accent-foreground: var(--forest-deep);
+  --destructive: #b42318;
+  --destructive-foreground: #ffffff;
+  --border: #e3e8f0;
+  --input: #d5dbe6;
+  --ring: var(--navy);
+  --chart-1: var(--navy);
+  --chart-2: var(--forest);
+  --chart-3: #7c93d6;
+  --chart-4: #47b58c;
+  --chart-5: var(--gold);
+  --sidebar: var(--navy);
+  --sidebar-foreground: #eef2fd;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: var(--navy);
+  --sidebar-accent: rgba(255, 255, 255, 0.12);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.16);
+  --sidebar-ring: #ffffff;
+}
+
+
+.dark {
+  --navy-soft: #1b2a52;
+  --forest-soft: #0d3a2c;
+  --background: #0b1220;
+  --foreground: #f5f7fb;
+  --card: #121a2b;
+  --card-foreground: #f5f7fb;
+  --popover: #121a2b;
+  --popover-foreground: #f5f7fb;
+  --primary: #93aef5;
+  --primary-foreground: #0b1220;
+  --secondary: #34d399;
+  --secondary-foreground: #052e22;
+  --muted: #1a2437;
+  --muted-foreground: #a6b1c4;
+  --accent: #1a2437;
+  --accent-foreground: #f5f7fb;
+  --destructive: #f97066;
+  --destructive-foreground: #0b1220;
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.18);
+  --ring: #93aef5;
+  --sidebar: #101a30;
+  --sidebar-foreground: #e6ecfa;
+  --sidebar-primary: #93aef5;
+  --sidebar-primary-foreground: #0b1220;
+  --sidebar-accent: rgba(255, 255, 255, 0.1);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.14);
+  --sidebar-ring: #93aef5;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.018em;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+}
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+}
+
+@utility brand-gradient {
+  background-image: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 55%, var(--forest) 140%);
+}
+
