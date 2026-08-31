@@ -1,7 +1,7 @@
 /**
  * Central site configuration.
  *
- * NOTE: every value marked PLACEHOLDER is intentionally generic — no real
+ * NOTE: every value marked PLACEHOLDER is intentionally generic - no real
  * school facts have been invented. Replace them (or override them from the
  * `site_settings` table in the backend) before going live.
  */
@@ -11,7 +11,7 @@ export const siteConfig = {
   tagline: "Learning that lasts a lifetime",
   description:
     "Sample1 School is a K-12 learning community focused on academic excellence, character and care. Explore our programmes, news, events and campus life.",
-  /** PLACEHOLDER contact details — replace with the school's real details. */
+  /** PLACEHOLDER contact details - replace with the school's real details. */
   contact: {
     addressLines: ["[PLACEHOLDER] 1 Example Road", "[PLACEHOLDER] City, Region 00000"],
     phone: "[PLACEHOLDER] +00 000 000 0000",

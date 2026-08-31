@@ -20,13 +20,13 @@ export const Route = createFileRoute("/apply/status/$id")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Application status — Sample1 School Admissions" },
+      { title: "Application status - Sample1 School Admissions" },
       {
         name: "description",
         content: "Track the progress of your Sample1 School application, documents and interview details.",
       },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Application status — Sample1 School Admissions" },
+      { property: "og:title", content: "Application status - Sample1 School Admissions" },
       { property: "og:description", content: "Track the progress of your Sample1 School application." },
     ],
   }),
@@ -204,7 +204,7 @@ function StatusPage({ userId }: { userId: string }) {
       </section>
 
       <p className="mt-10 text-xs text-muted-foreground">
-        Email notifications are not yet connected — updates appear in your portal notifications. Application fees are
+        Email notifications are not yet connected - updates appear in your portal notifications. Application fees are
         recorded in the system but online payment is not yet enabled.
       </p>
     </div>

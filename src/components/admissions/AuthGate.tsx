@@ -12,7 +12,7 @@ type Mode = "signin" | "signup";
 
 /**
  * Client-side gate for the applicant portal and the staff area.
- * The real security boundary is Row Level Security in the database — this only
+ * The real security boundary is Row Level Security in the database - this only
  * decides what UI to render.
  */
 export function AuthGate({

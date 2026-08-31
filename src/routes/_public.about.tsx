@@ -8,12 +8,12 @@ import { pageQuery } from "@/lib/content";
 
 const title = "About Sample1 School";
 const description =
-  "Our story, mission, values and leadership — managed by school staff through the Sample1 content admin.";
+  "Our story, mission, values and leadership - managed by school staff through the Sample1 content admin.";
 
 export const Route = createFileRoute("/_public/about")({
   head: () => ({
     meta: [
-      { title: `${title} — Sample1 School` },
+      { title: `${title} - Sample1 School` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },

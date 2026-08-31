@@ -11,7 +11,7 @@ const description =
 export const Route = createFileRoute("/_public/admissions")({
   head: () => ({
     meta: [
-      { title: `${title} — Sample1 School` },
+      { title: `${title} - Sample1 School` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/_public/admissions")({
 const steps = [
   { step: "1", title: "Enquire", body: "Send an enquiry through the contact form and the office will respond." },
   { step: "2", title: "Visit", body: "Tour dates will be published here once confirmed by the school." },
-  { step: "3", title: "Apply", body: "Create an account and complete the online application — your progress saves as you go." },
+  { step: "3", title: "Apply", body: "Create an account and complete the online application - your progress saves as you go." },
   { step: "4", title: "Enrol", body: "Offer, acceptance and enrolment steps will be tracked in the portal." },
 ];
 

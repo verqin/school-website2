@@ -32,13 +32,13 @@ export const Route = createFileRoute("/apply/application/$id")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Application form — Sample1 School Admissions" },
+      { title: "Application form - Sample1 School Admissions" },
       {
         name: "description",
         content: "Complete your Sample1 School application. Progress is saved automatically at every step.",
       },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Application form — Sample1 School Admissions" },
+      { property: "og:title", content: "Application form - Sample1 School Admissions" },
       { property: "og:description", content: "Complete your Sample1 School application step by step." },
     ],
   }),
@@ -229,8 +229,8 @@ function Wizard({ userId, application }: { userId: string; application: Applicat
     }
   }
 
-  const gradeName = grades.data?.find((g) => g.id === values["grade_level_id"])?.name ?? "—";
-  const periodName = periods.data?.find((p) => p.id === values["period_id"])?.name ?? "—";
+  const gradeName = grades.data?.find((g) => g.id === values["grade_level_id"])?.name ?? "-";
+  const periodName = periods.data?.find((p) => p.id === values["period_id"])?.name ?? "-";
 
   return (
     <div className="container-page py-10">
@@ -251,7 +251,7 @@ function Wizard({ userId, application }: { userId: string; application: Applicat
               <Check className="size-4 text-secondary" aria-hidden="true" /> Draft saved
             </>
           ) : saveState === "error" ? (
-            <span className="text-destructive">Could not save — check your connection</span>
+            <span className="text-destructive">Could not save - check your connection</span>
           ) : (
             "Your progress saves automatically"
           )}
@@ -491,7 +491,7 @@ function Review({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-lg border bg-background px-4 py-3">
       <dt className="text-xs uppercase tracking-wide text-muted-foreground">{label}</dt>
-      <dd className="mt-1 text-sm font-medium">{value || "—"}</dd>
+      <dd className="mt-1 text-sm font-medium">{value || "-"}</dd>
     </div>
   );
 }

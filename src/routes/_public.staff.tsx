@@ -10,7 +10,7 @@ const description = "Meet the leadership team, teachers and support staff of Sam
 export const Route = createFileRoute("/_public/staff")({
   head: () => ({
     meta: [
-      { title: `${title} — Sample1 School` },
+      { title: `${title} - Sample1 School` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },

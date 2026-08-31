@@ -38,10 +38,10 @@ export const Route = createFileRoute("/admin/admissions/$id")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Application review — Sample1 School Staff" },
+      { title: "Application review - Sample1 School Staff" },
       { name: "description", content: "Review an application, verify documents, schedule interviews and record decisions." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Application review — Sample1 School Staff" },
+      { property: "og:title", content: "Application review - Sample1 School Staff" },
       { property: "og:description", content: "Review applications, documents, interviews and decisions." },
     ],
   }),
@@ -153,21 +153,21 @@ function Review({ app, staffId }: { app: Application; staffId: string }) {
         <div className="grid gap-6 lg:col-span-2">
           <Panel title="Applicant details">
             <dl className="grid gap-3 sm:grid-cols-2">
-              <Item label="Date of birth" value={app.student_dob ?? "—"} />
-              <Item label="Gender" value={formDataValue(app, "gender") || "—"} />
-              <Item label="Nationality" value={formDataValue(app, "nationality") || "—"} />
-              <Item label="Home address" value={formDataValue(app, "home_address") || "—"} />
-              <Item label="Guardian" value={app.guardian_name ?? "—"} />
-              <Item label="Guardian email" value={app.guardian_email ?? "—"} />
-              <Item label="Guardian phone" value={app.guardian_phone ?? "—"} />
+              <Item label="Date of birth" value={app.student_dob ?? "-"} />
+              <Item label="Gender" value={formDataValue(app, "gender") || "-"} />
+              <Item label="Nationality" value={formDataValue(app, "nationality") || "-"} />
+              <Item label="Home address" value={formDataValue(app, "home_address") || "-"} />
+              <Item label="Guardian" value={app.guardian_name ?? "-"} />
+              <Item label="Guardian email" value={app.guardian_email ?? "-"} />
+              <Item label="Guardian phone" value={app.guardian_phone ?? "-"} />
               <Item
                 label="Grade applied for"
-                value={grades.data?.find((g) => g.id === app.grade_level_id)?.name ?? "—"}
+                value={grades.data?.find((g) => g.id === app.grade_level_id)?.name ?? "-"}
               />
-              <Item label="Previous school" value={formDataValue(app, "previous_school") || "—"} />
-              <Item label="Previous grade" value={formDataValue(app, "previous_grade") || "—"} />
-              <Item label="Achievements" value={formDataValue(app, "achievements") || "—"} />
-              <Item label="Support needs" value={formDataValue(app, "medical_notes") || "—"} />
+              <Item label="Previous school" value={formDataValue(app, "previous_school") || "-"} />
+              <Item label="Previous grade" value={formDataValue(app, "previous_grade") || "-"} />
+              <Item label="Achievements" value={formDataValue(app, "achievements") || "-"} />
+              <Item label="Support needs" value={formDataValue(app, "medical_notes") || "-"} />
             </dl>
           </Panel>
 
@@ -281,7 +281,7 @@ function Review({ app, staffId }: { app: Application; staffId: string }) {
                 <ul className="mt-2 grid gap-1 text-xs text-muted-foreground">
                   {(requests.data ?? []).map((r) => (
                     <li key={r.id}>
-                      {r.label} — {r.resolved_at ? "resolved" : "outstanding"}
+                      {r.label} - {r.resolved_at ? "resolved" : "outstanding"}
                     </li>
                   ))}
                 </ul>
@@ -387,7 +387,7 @@ function Review({ app, staffId }: { app: Application; staffId: string }) {
 
           <Panel title="Internal notes">
             <p className="text-xs text-muted-foreground">
-              Notes are visible to staff only — applicants can never read them.
+              Notes are visible to staff only - applicants can never read them.
             </p>
             <form
               className="mt-3 grid gap-3"
@@ -495,7 +495,7 @@ function Review({ app, staffId }: { app: Application; staffId: string }) {
           <Panel title="Payment">
             <p className="text-sm text-muted-foreground">
               Fee status: <span className="font-medium">{app.payment_status}</span>. Online payment is not connected
-              yet — the schema records fees so a provider can be added without data migration.
+              yet - the schema records fees so a provider can be added without data migration.
             </p>
           </Panel>
 

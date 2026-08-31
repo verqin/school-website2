@@ -141,7 +141,7 @@ export function MediaFrame({
         />
       ) : (
         <div className="flex size-full items-center justify-center px-4 text-center text-xs font-medium text-muted-foreground">
-          Image placeholder — add artwork in the admin area
+          Image placeholder - add artwork in the admin area
         </div>
       )}
     </div>
