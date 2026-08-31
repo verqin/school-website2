@@ -24,10 +24,10 @@ export const Route = createFileRoute("/admin/admissions/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Admissions dashboard — Sample1 School Staff" },
+      { title: "Admissions dashboard - Sample1 School Staff" },
       { name: "description", content: "Review, filter and progress Sample1 School applications." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Admissions dashboard — Sample1 School Staff" },
+      { property: "og:title", content: "Admissions dashboard - Sample1 School Staff" },
       { property: "og:description", content: "Review, filter and progress applications." },
     ],
   }),

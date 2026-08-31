@@ -22,13 +22,13 @@ export const Route = createFileRoute("/apply/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Applicant portal — Sample1 School Admissions" },
+      { title: "Applicant portal - Sample1 School Admissions" },
       {
         name: "description",
         content: "Start, continue and track your Sample1 School application in the secure applicant portal.",
       },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Applicant portal — Sample1 School Admissions" },
+      { property: "og:title", content: "Applicant portal - Sample1 School Admissions" },
       { property: "og:description", content: "Start, continue and track your Sample1 School application." },
     ],
   }),

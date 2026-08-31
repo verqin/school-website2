@@ -95,7 +95,7 @@ export function DocumentsPanel({
               .map((r) => (
                 <li key={r.id}>
                   <span className="font-medium">{r.label}</span>
-                  {r.message ? <span className="text-muted-foreground"> — {r.message}</span> : null}
+                  {r.message ? <span className="text-muted-foreground"> - {r.message}</span> : null}
                 </li>
               ))}
           </ul>
@@ -231,7 +231,7 @@ function DocumentRow({
         <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
           <Icon className="size-3.5" aria-hidden="true" />
           {meta.label}
-          {doc.status === "rejected" && doc.rejection_reason ? ` — ${doc.rejection_reason}` : ""}
+          {doc.status === "rejected" && doc.rejection_reason ? ` - ${doc.rejection_reason}` : ""}
         </p>
       </div>
       <div className="flex items-center gap-2">

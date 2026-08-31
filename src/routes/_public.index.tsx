@@ -12,9 +12,9 @@ import { siteConfig } from "@/lib/site-config";
 export const Route = createFileRoute("/_public/")({
   head: () => ({
     meta: [
-      { title: "Sample1 School — K-12 Learning Community" },
+      { title: "Sample1 School - K-12 Learning Community" },
       { name: "description", content: siteConfig.description },
-      { property: "og:title", content: "Sample1 School — K-12 Learning Community" },
+      { property: "og:title", content: "Sample1 School - K-12 Learning Community" },
       { property: "og:description", content: siteConfig.description },
     ],
   }),
@@ -71,7 +71,7 @@ function HomePage() {
           id="pillars-heading"
           eyebrow="Why Sample1"
           title="Three commitments that shape every school day"
-          description="Replace this narrative with the school's own positioning statement — the structure is ready."
+          description="Replace this narrative with the school's own positioning statement - the structure is ready."
         />
         <div className="grid gap-6 md:grid-cols-3">
           {pillars.map(({ icon: Icon, title, body }) => (

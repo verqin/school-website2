@@ -215,7 +215,7 @@ export const myApplicationsQuery = () =>
 
 /**
  * Single application. RLS guarantees a caller can only ever read their own
- * application (or any application when they are staff) — an unauthorised id
+ * application (or any application when they are staff) - an unauthorised id
  * simply returns null, which the routes render as "not found".
  */
 export const applicationQuery = (id: string) =>
@@ -535,7 +535,7 @@ export async function deleteApplicationDocument(doc: ApplicationDocument) {
   await supabase.storage.from("application-documents").remove([doc.storage_path]);
 }
 
-/** Short-lived signed URL — the bucket itself is private. */
+/** Short-lived signed URL - the bucket itself is private. */
 export async function signedDocumentUrl(path: string) {
   const { data, error } = await supabase.storage
     .from("application-documents")

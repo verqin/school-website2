@@ -3598,6 +3598,44 @@ export type Database = {
       current_guardian_id: { Args: never; Returns: string }
       current_staff_id: { Args: never; Returns: string }
       current_student_id: { Args: never; Returns: string }
+      enroll_accepted_applicant: {
+        Args: {
+          _academic_year_id: string
+          _application_id: string
+          _class_id?: string
+          _grade_level_id?: string
+        }
+        Returns: {
+          admission_date: string | null
+          application_id: string | null
+          created_at: string
+          current_academic_year_id: string | null
+          current_class_id: string | null
+          date_of_birth: string | null
+          exit_date: string | null
+          exit_reason: string | null
+          first_name: string
+          gender: string | null
+          grade_level_id: string | null
+          id: string
+          last_name: string
+          middle_name: string | null
+          nationality: string | null
+          photo_url: string | null
+          place_of_birth: string | null
+          previous_school: string | null
+          status: Database["public"]["Enums"]["student_status"]
+          student_no: string
+          updated_at: string
+          user_id: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "students"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       grade_for_percentage: {
         Args: { _percentage: number; _scale_id?: string }
         Returns: string
@@ -3618,6 +3656,7 @@ export type Database = {
       is_student_self: { Args: { _student_id: string }; Returns: boolean }
       next_application_reference: { Args: never; Returns: string }
       next_student_number: { Args: never; Returns: string }
+      recalculate_invoice: { Args: { _invoice_id: string }; Returns: undefined }
       set_application_status: {
         Args: {
           _application_id: string
@@ -3653,6 +3692,35 @@ export type Database = {
         SetofOptions: {
           from: "*"
           to: "applications"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      set_enrollment_stage: {
+        Args: {
+          _enrollment_id: string
+          _note?: string
+          _stage: Database["public"]["Enums"]["enrollment_stage"]
+        }
+        Returns: {
+          academic_year_id: string
+          application_id: string | null
+          class_id: string | null
+          created_at: string
+          created_by: string | null
+          end_date: string | null
+          grade_level_id: string | null
+          id: string
+          notes: string | null
+          reason: string | null
+          stage: Database["public"]["Enums"]["enrollment_stage"]
+          start_date: string | null
+          student_id: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "enrollments"
           isOneToOne: true
           isSetofReturn: false
         }

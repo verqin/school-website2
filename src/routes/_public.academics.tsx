@@ -13,7 +13,7 @@ const description =
 export const Route = createFileRoute("/_public/academics")({
   head: () => ({
     meta: [
-      { title: `${title} — Sample1 School` },
+      { title: `${title} - Sample1 School` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },

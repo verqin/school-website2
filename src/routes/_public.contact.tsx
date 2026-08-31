@@ -10,12 +10,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { siteConfig } from "@/lib/site-config";
 
 const title = "Contact Us";
-const description = "Get in touch with the Sample1 School office — enquiries, visits and general questions.";
+const description = "Get in touch with the Sample1 School office - enquiries, visits and general questions.";
 
 export const Route = createFileRoute("/_public/contact")({
   head: () => ({
     meta: [
-      { title: `${title} — Sample1 School` },
+      { title: `${title} - Sample1 School` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
@@ -77,7 +77,7 @@ function ContactPage() {
                 </Button>
                 <p aria-live="polite" className="text-sm">
                   {status === "sent" ? (
-                    <span className="text-secondary">Thank you — the office will be in touch.</span>
+                    <span className="text-secondary">Thank you - the office will be in touch.</span>
                   ) : status === "error" ? (
                     <span className="text-destructive">{message || "Something went wrong."}</span>
                   ) : null}

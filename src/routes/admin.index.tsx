@@ -7,10 +7,10 @@ export const Route = createFileRoute("/admin/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Staff dashboard — Sample1 School" },
+      { title: "Staff dashboard - Sample1 School" },
       { name: "description", content: "Secure staff dashboard for Sample1 School content and admissions." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Staff dashboard — Sample1 School" },
+      { property: "og:title", content: "Staff dashboard - Sample1 School" },
       { property: "og:description", content: "Secure staff dashboard for content and admissions." },
     ],
   }),
@@ -39,7 +39,7 @@ function AdminHome() {
         </Button>
       </div>
       <p className="mt-8 rounded-lg border bg-card p-4 text-sm text-muted-foreground">
-        Content editing screens for news, events, gallery, staff, programmes and pages arrive in a later release — the
+        Content editing screens for news, events, gallery, staff, programmes and pages arrive in a later release - the
         database, storage and permissions for them are already in place.
       </p>
     </div>

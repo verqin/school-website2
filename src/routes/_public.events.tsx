@@ -10,7 +10,7 @@ const description = "Upcoming concerts, sports fixtures, parent evenings and cel
 export const Route = createFileRoute("/_public/events")({
   head: () => ({
     meta: [
-      { title: `${title} — Sample1 School` },
+      { title: `${title} - Sample1 School` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
