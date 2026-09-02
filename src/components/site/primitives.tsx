@@ -53,13 +53,13 @@ export function SectionHeading({
         <p
           className={cn(
             "mb-3 text-xs font-semibold tracking-[0.18em] uppercase",
-            inverted ? "text-primary-foreground/70" : "text-secondary",
+            inverted ? "text-primary-foreground/70" : "text-gold",
           )}
         >
           {eyebrow}
         </p>
       ) : null}
-      <h2 id={id} className="text-3xl font-semibold sm:text-4xl">
+      <h2 id={id} className={cn("text-3xl font-extrabold sm:text-4xl", !inverted && "text-primary")}>
         {title}
       </h2>
       {description ? (
