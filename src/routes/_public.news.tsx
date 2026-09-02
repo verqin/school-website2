@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { MediaFrame, PageHero, Section } from "@/components/site/primitives";
+import { MediaFrame, Section } from "@/components/site/primitives";
 import { CardSkeletonGrid, EmptyState, ErrorState } from "@/components/site/states";
 import { formatDate, newsListQuery } from "@/lib/content";
+import { ImageHero } from "@/components/site/blocks";
+import newsHero from "@/assets/news-hero.jpg";
 
 const title = "School News";
 const description = "Announcements, achievements and stories from across the Sample1 School community.";
@@ -24,7 +26,7 @@ function NewsPage() {
 
   return (
     <>
-      <PageHero eyebrow="Newsroom" title={title} description={description} />
+      <ImageHero image={newsHero} imageAlt="Sample1 School students in a corridor by the noticeboards" eyebrow="Newsroom" title={title} description={description} />
       <Section>
         {news.isPending ? (
           <CardSkeletonGrid count={6} />

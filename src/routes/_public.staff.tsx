@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { MediaFrame, PageHero, Section } from "@/components/site/primitives";
+import { MediaFrame, Section } from "@/components/site/primitives";
 import { CardSkeletonGrid, EmptyState, ErrorState } from "@/components/site/states";
 import { staffQuery } from "@/lib/content";
+import { ImageHero } from "@/components/site/blocks";
+import staffHero from "@/assets/staff-group.jpg";
 
 const title = "Staff & Faculty";
 const description = "Meet the leadership team, teachers and support staff of Sample1 School.";
@@ -24,7 +26,7 @@ function StaffPage() {
 
   return (
     <>
-      <PageHero eyebrow="Our people" title={title} description={description} />
+      <ImageHero image={staffHero} imageAlt="Sample1 School teaching staff group photograph" eyebrow="Our people" title={title} description={description} />
       <Section>
         {staff.isPending ? (
           <CardSkeletonGrid count={6} />

@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { MediaFrame, PageHero, Section } from "@/components/site/primitives";
+import { MediaFrame, Section } from "@/components/site/primitives";
 import { CardSkeletonGrid, EmptyState, ErrorState } from "@/components/site/states";
 import { albumsQuery } from "@/lib/content";
+import { ImageHero } from "@/components/site/blocks";
+import galleryHero from "@/assets/gallery-hero.jpg";
 
 const title = "Photo Gallery";
 const description = "Albums from school life at Sample1 School - events, trips, sport, arts and everyday moments.";
@@ -24,7 +26,7 @@ function GalleryPage() {
 
   return (
     <>
-      <PageHero eyebrow="Gallery" title={title} description={description} />
+      <ImageHero image={galleryHero} imageAlt="Sample1 School pupils in an arts and music session" eyebrow="Gallery" title={title} description={description} />
       <Section>
         {albums.isPending ? (
           <CardSkeletonGrid count={6} />
