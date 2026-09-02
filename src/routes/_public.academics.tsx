@@ -2,9 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MediaFrame, PageHero, Prose, Section, SectionHeading } from "@/components/site/primitives";
+import { MediaFrame, Prose, Section, SectionHeading } from "@/components/site/primitives";
 import { CardSkeletonGrid, EmptyState, ErrorState, PlaceholderNote } from "@/components/site/states";
 import { pageQuery, programsQuery } from "@/lib/content";
+import { ImageHero } from "@/components/site/blocks";
+import academicsHero from "@/assets/science-lab.jpg";
 
 const title = "Academics & Programmes";
 const description =
@@ -28,7 +30,7 @@ function AcademicsPage() {
 
   return (
     <>
-      <PageHero eyebrow="Academics" title={page.data?.title ?? title} description={page.data?.subtitle ?? description} />
+      <ImageHero image={academicsHero} imageAlt="Students working in a Sample1 School science laboratory" eyebrow="Academics" title={page.data?.title ?? title} description={page.data?.subtitle ?? description} />
 
       <Section labelledBy="approach-heading">
         <SectionHeading id="approach-heading" eyebrow="Our approach" title="Teaching and learning at Sample1" />

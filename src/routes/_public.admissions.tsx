@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PageHero, Section, SectionHeading } from "@/components/site/primitives";
+import { Section, SectionHeading } from "@/components/site/primitives";
 import { PlaceholderNote } from "@/components/site/states";
+import { ImageHero } from "@/components/site/blocks";
+import admissionsHero from "@/assets/admissions-hero.jpg";
 
 const title = "Admissions";
 const description =
@@ -30,7 +32,7 @@ const steps = [
 function AdmissionsPage() {
   return (
     <>
-      <PageHero eyebrow="Join us" title={title} description={description} />
+      <ImageHero image={admissionsHero} imageAlt="Parents meeting the Sample1 School admissions team" eyebrow="Join us" title={title} description={description} />
 
       <Section labelledBy="steps-heading">
         <SectionHeading id="steps-heading" eyebrow="The journey" title="Four steps to joining Sample1" />

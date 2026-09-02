@@ -16,7 +16,7 @@ export const siteConfig = {
     addressLines: ["[PLACEHOLDER] 1 Example Road", "[PLACEHOLDER] City, Region 00000"],
     phone: "[PLACEHOLDER] +00 000 000 0000",
     email: "[PLACEHOLDER] hello@example.edu",
-    officeHours: "[PLACEHOLDER] Mon–Fri, 08:00–16:00",
+    officeHours: "[PLACEHOLDER] Mon-Fri, 08:00-16:00",
   },
   social: [
     { label: "Facebook", href: "#" },

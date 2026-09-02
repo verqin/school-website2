@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MediaFrame, PageHero, Prose, Section, SectionHeading } from "@/components/site/primitives";
+import { MediaFrame, Prose, Section, SectionHeading } from "@/components/site/primitives";
 import { ErrorState, PlaceholderNote } from "@/components/site/states";
 import { Skeleton } from "@/components/ui/skeleton";
 import { pageQuery } from "@/lib/content";
+import { ImageHero } from "@/components/site/blocks";
+import aboutHero from "@/assets/about-hero.jpg";
 
 const title = "About Sample1 School";
 const description =
@@ -33,7 +35,7 @@ function AboutPage() {
 
   return (
     <>
-      <PageHero eyebrow="About us" title={page.data?.title ?? title} description={page.data?.subtitle ?? description} />
+      <ImageHero image={aboutHero} imageAlt="Sample1 School courtyard with students at assembly" eyebrow="About us" title={page.data?.title ?? title} description={page.data?.subtitle ?? description} />
 
       <Section labelledBy="story-heading">
         <div className="grid items-start gap-10 lg:grid-cols-[1.2fr_1fr]">

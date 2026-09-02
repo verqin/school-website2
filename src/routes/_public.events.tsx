@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { PageHero, Section } from "@/components/site/primitives";
+import { Section } from "@/components/site/primitives";
 import { CardSkeletonGrid, EmptyState, ErrorState } from "@/components/site/states";
 import { eventsListQuery, formatDateTime } from "@/lib/content";
+import { ImageHero } from "@/components/site/blocks";
+import eventsHero from "@/assets/events-hero.jpg";
 
 const title = "Events & Calendar";
 const description = "Upcoming concerts, sports fixtures, parent evenings and celebrations at Sample1 School.";
@@ -24,7 +26,7 @@ function EventsPage() {
 
   return (
     <>
-      <PageHero eyebrow="Calendar" title={title} description={description} />
+      <ImageHero image={eventsHero} imageAlt="Sample1 School assembly hall during a school event" eyebrow="Calendar" title={title} description={description} />
       <Section>
         {events.isPending ? (
           <CardSkeletonGrid count={4} />

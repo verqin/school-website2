@@ -4,10 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { PageHero, Section, SectionHeading } from "@/components/site/primitives";
+import { Section, SectionHeading } from "@/components/site/primitives";
 import { PlaceholderNote } from "@/components/site/states";
 import { supabase } from "@/integrations/supabase/client";
 import { siteConfig } from "@/lib/site-config";
+import { ImageHero } from "@/components/site/blocks";
+import contactHero from "@/assets/contact-hero.jpg";
 
 const title = "Contact Us";
 const description = "Get in touch with the Sample1 School office - enquiries, visits and general questions.";
@@ -49,7 +51,7 @@ function ContactPage() {
 
   return (
     <>
-      <PageHero eyebrow="Contact" title={title} description={description} />
+      <ImageHero image={contactHero} imageAlt="Entrance to the Sample1 School campus" eyebrow="Contact" title={title} description={description} />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr]">
           <div>

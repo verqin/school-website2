@@ -2,6 +2,8 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { AnnouncementBar } from "@/components/site/AnnouncementBar";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { FloatingContact } from "@/components/site/blocks";
+
 
 export const Route = createFileRoute("/_public")({
   component: PublicLayout,
@@ -22,6 +24,8 @@ function PublicLayout() {
         <Outlet />
       </main>
       <Footer />
+      <FloatingContact href="/contact" label="Contact Sample1 School" />
     </div>
+
   );
 }
