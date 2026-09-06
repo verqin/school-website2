@@ -8,12 +8,12 @@ import admissionsHero from "@/assets/admissions-hero.jpg";
 
 const title = "Admissions";
 const description =
-  "How to join Sample1 School: enquiry, application and enrolment. The online application experience is coming soon.";
+  "Join Cresta Reign Academy through a clear, welcoming application journey for academic education and vocational training.";
 
 export const Route = createFileRoute("/_public/admissions")({
   head: () => ({
     meta: [
-      { title: `${title} - Sample1 School` },
+      { title: `${title} - Cresta Reign Academy` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
@@ -25,17 +25,17 @@ export const Route = createFileRoute("/_public/admissions")({
 const steps = [
   { step: "1", title: "Enquire", body: "Send an enquiry through the contact form and the office will respond." },
   { step: "2", title: "Visit", body: "Tour dates will be published here once confirmed by the school." },
-  { step: "3", title: "Apply", body: "Create an account and complete the online application - your progress saves as you go." },
+  { step: "3", title: "Apply", body: "Complete the application form without creating an account. Our team will contact you with next steps." },
   { step: "4", title: "Enrol", body: "Offer, acceptance and enrolment steps will be tracked in the portal." },
 ];
 
 function AdmissionsPage() {
   return (
     <>
-      <ImageHero image={admissionsHero} imageAlt="Parents meeting the Sample1 School admissions team" eyebrow="Join us" title={title} description={description} />
+      <ImageHero image={admissionsHero} imageAlt="Parents meeting the Cresta Reign Academy admissions team" eyebrow="Join us" title={title} description={description} />
 
       <Section labelledBy="steps-heading">
-        <SectionHeading id="steps-heading" eyebrow="The journey" title="Four steps to joining Sample1" />
+        <SectionHeading id="steps-heading" eyebrow="The journey" title="Four steps to joining Cresta Reign" />
         <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((item) => (
             <li key={item.step}>

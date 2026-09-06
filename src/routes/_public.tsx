@@ -24,7 +24,7 @@ function PublicLayout() {
         <Outlet />
       </main>
       <Footer />
-      <FloatingContact href="/contact" label="Contact Sample1 School" />
+      <FloatingContact href="/contact" label="Contact Cresta Reign Academy" />
     </div>
 
   );

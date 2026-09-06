@@ -6,17 +6,16 @@
  * `site_settings` table in the backend) before going live.
  */
 export const siteConfig = {
-  name: "Sample1 School",
-  shortName: "Sample1",
-  tagline: "Learning that lasts a lifetime",
+  name: "Cresta Reign Academy",
+  shortName: "Cresta Reign",
+  tagline: "Rise with purpose. Lead with distinction.",
   description:
-    "Sample1 School is a K-12 learning community focused on academic excellence, character and care. Explore our programmes, news, events and campus life.",
-  /** PLACEHOLDER contact details - replace with the school's real details. */
+    "Cresta Reign Academy is an educational and vocational training institution in Bulawayo, Zimbabwe, shaping confident scholars and capable professionals.",
   contact: {
-    addressLines: ["[PLACEHOLDER] 1 Example Road", "[PLACEHOLDER] City, Region 00000"],
-    phone: "[PLACEHOLDER] +00 000 000 0000",
-    email: "[PLACEHOLDER] hello@example.edu",
-    officeHours: "[PLACEHOLDER] Mon-Fri, 08:00-16:00",
+    addressLines: ["Hillside West, Bulawayo", "Corner 11th Avenue and Jason Moyo (2nd Floor)", "Alledeloyd Building, Room 10B, J. Tongogara Street"],
+    phone: "+263 779 739 148 or +263 775 656 322",
+    email: "admissions@crestareign.ac.zw",
+    officeHours: "Mon-Fri, 08:00-16:00",
   },
   social: [
     { label: "Facebook", href: "#" },

@@ -22,14 +22,14 @@ export const Route = createFileRoute("/apply/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Applicant portal - Sample1 School Admissions" },
+      { title: "Applicant portal - Cresta Reign Academy Admissions" },
       {
         name: "description",
-        content: "Start, continue and track your Sample1 School application in the secure applicant portal.",
+        content: "Start, continue and track your Cresta Reign Academy application in the secure applicant portal.",
       },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Applicant portal - Sample1 School Admissions" },
-      { property: "og:description", content: "Start, continue and track your Sample1 School application." },
+      { property: "og:title", content: "Applicant portal - Cresta Reign Academy Admissions" },
+      { property: "og:description", content: "Start, continue and track your Cresta Reign Academy application." },
     ],
   }),
   component: () => (
