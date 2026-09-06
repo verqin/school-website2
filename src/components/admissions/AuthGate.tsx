@@ -65,7 +65,7 @@ export function AuthGate({
       });
       setBusy(false);
       if (signUpError) {
-        setError(signUpError.message);
+        setError(signUpError.message.includes("confirm") ? "Check your email to confirm your application account." : "We could not create that application account. Please check your details and try again.");
         return;
       }
       setMessage("Account created. If email confirmation is required you will need to confirm before signing in.");
@@ -74,7 +74,7 @@ export function AuthGate({
     }
     const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (signInError) setError(signInError.message);
+    if (signInError) setError(signInError.message.toLowerCase().includes("confirm") ? "Confirm your email before signing in." : "Invalid email or password.");
   }
 
   if (loading) {

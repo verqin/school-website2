@@ -17,7 +17,7 @@ import sports from "@/assets/sports.jpg";
 import ictCentre from "@/assets/ict-centre.jpg";
 import staffGroup from "@/assets/staff-group.jpg";
 
-const pageTitle = "Sample1 School - Nurturing Excellence From Early Years to High School";
+const pageTitle = "Cresta Reign Academy - Nurturing Excellence From Early Years to High School";
 
 export const Route = createFileRoute("/_public/")({
   head: () => ({
@@ -111,7 +111,7 @@ function HomePage() {
     <>
       <ImageHero
         image={heroStudents}
-        imageAlt="Sample1 School students in uniform in a bright school common room"
+        imageAlt="Cresta Reign Academy students in uniform in a bright school common room"
         title={siteConfig.name}
         description="Nurturing excellence from early years to high school. Experience world-class education in a modern, innovative environment."
         size="hero"
@@ -141,7 +141,7 @@ function HomePage() {
           title={`Welcome to ${siteConfig.shortName}`}
           description="We provide exceptional education from primary to secondary level. Our goal is to give parents a clear understanding of our learning environment, values and modern facilities - empowering you to make informed decisions about your child's future."
         />
-        <SplitFeature image={campus} imageAlt="Sample1 School campus buildings and grounds">
+        <SplitFeature image={campus} imageAlt="Cresta Reign Academy campus buildings and grounds">
           <h3 className="text-2xl font-extrabold text-primary">A campus built for learning</h3>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
             Purpose-built classrooms, laboratories, libraries and sports grounds sit within a secure campus where every
@@ -223,7 +223,7 @@ function HomePage() {
         <div className="overflow-hidden rounded-3xl shadow-xl">
           <img
             src={staffGroup}
-            alt="Sample1 School teaching staff group photograph"
+            alt="Cresta Reign Academy teaching staff group photograph"
             loading="lazy"
             decoding="async"
             className="aspect-[16/7] w-full object-cover"

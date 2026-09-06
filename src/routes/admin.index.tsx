@@ -7,10 +7,10 @@ export const Route = createFileRoute("/admin/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Staff dashboard - Sample1 School" },
-      { name: "description", content: "Secure staff dashboard for Sample1 School content and admissions." },
+      { title: "Staff dashboard - Cresta Reign Academy" },
+      { name: "description", content: "Secure staff dashboard for Cresta Reign Academy content and admissions." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Staff dashboard - Sample1 School" },
+      { property: "og:title", content: "Staff dashboard - Cresta Reign Academy" },
       { property: "og:description", content: "Secure staff dashboard for content and admissions." },
     ],
   }),

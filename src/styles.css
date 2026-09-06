@@ -75,14 +75,14 @@
   --font-sans:
     "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  /* Happy Kids Junior School brand */
-  --navy: #1e2a78;
-  --navy-deep: #131a52;
-  --navy-soft: #eef1fd;
-  --forest: #0f7a63;
-  --forest-deep: #0a5b49;
-  --forest-soft: #e7f5f1;
-  --gold: #b8860b;
+  /* Cresta Reign Academy: ink, emerald, and champagne */
+  --navy: #172033;
+  --navy-deep: #0b1220;
+  --navy-soft: #e8edf5;
+  --forest: #0f6b54;
+  --forest-deep: #084936;
+  --forest-soft: #e5f2ed;
+  --gold: #b18a42;
 
   --background: #f6f7fc;
   --foreground: #0f1729;
