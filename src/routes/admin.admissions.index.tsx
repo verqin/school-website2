@@ -19,7 +19,7 @@ export const Route = createFileRoute("/admin/admissions/")({
 
 function exportRows(rows: Array<Record<string, unknown>>) {
   const headers = ["Reference", "Student", "Guardian", "Email", "Status", "Submitted"];
-  const values = rows.map((row) => [row.reference_code, `${row.student_first_name ?? ""} ${row.student_last_name ?? ""}`.trim(), row.guardian_name, row.guardian_email, row.status, row.submitted_at]);
+  const values = rows.map((row) => [row["reference_code"], `${row["student_first_name"] ?? ""} ${row["student_last_name"] ?? ""}`.trim(), row["guardian_name"], row["guardian_email"], row["status"], row["submitted_at"]]);
   const csv = [headers, ...values].map((line) => line.map((value) => `"${String(value ?? "").replaceAll('"', '""')}"`).join(",")).join("\n");
   const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
   const anchor = document.createElement("a"); anchor.href = url; anchor.download = "cresta-reign-admissions.csv"; anchor.click(); URL.revokeObjectURL(url);

@@ -34,6 +34,9 @@
   --color-forest-deep: var(--forest-deep);
   --color-forest-soft: var(--forest-soft);
   --color-gold: var(--gold);
+  --color-purple: var(--purple);
+  --color-purple-deep: var(--purple-deep);
+  --color-royal: var(--royal);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -75,14 +78,25 @@
   --font-sans:
     "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  /* Cresta Reign Academy: ink, emerald, and champagne */
-  --navy: #172033;
-  --navy-deep: #0b1220;
-  --navy-soft: #e8edf5;
-  --forest: #0f6b54;
-  --forest-deep: #084936;
-  --forest-soft: #e5f2ed;
-  --gold: #b18a42;
+  /*
+   * Cresta Reign Academy brand, taken from the crest: royal purple and gold,
+   * with a royal blue supporting colour.
+   * The historical token names are kept so every existing utility class picks
+   * up the new brand automatically:
+   *   navy*   -> royal purple (primary)
+   *   forest* -> royal blue (supporting)
+   *   gold    -> crest gold (highlights)
+   */
+  --navy: #6b2a8f;
+  --navy-deep: #43175c;
+  --navy-soft: #f2e9f8;
+  --forest: #1e3fae;
+  --forest-deep: #142c7c;
+  --forest-soft: #e7ecfb;
+  --gold: #f0a81c;
+  --purple: #6b2a8f;
+  --purple-deep: #43175c;
+  --royal: #1e3fae;
 
   --background: #f6f7fc;
   --foreground: #0f1729;

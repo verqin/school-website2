@@ -1,210 +1,310 @@
 import { useState } from "react";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Bell, FilePlus2, FileText } from "lucide-react";
-import { AuthGate } from "@/components/admissions/AuthGate";
-import { Badge } from "@/components/ui/badge";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { CheckCircle2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Skeleton } from "@/components/ui/skeleton";
-import { EmptyState, ErrorState } from "@/components/site/states";
-import {
-  STATUS_LABELS,
-  createApplication,
-  markNotificationRead,
-  myApplicationsQuery,
-  notificationsQuery,
-  periodsQuery,
-  completionPercent,
-} from "@/lib/admissions";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
+import { STATUS_LABELS, type ApplicationStatus } from "@/lib/admissions";
+import { submitPublicApplication, trackPublicApplication } from "@/lib/public-apply.functions";
+
+const title = "Apply to Cresta Reign Academy";
+const description =
+  "Complete the application form in one sitting. No account, no password - you get a reference number as soon as you send it.";
 
 export const Route = createFileRoute("/apply/")({
-  ssr: false,
   head: () => ({
     meta: [
-      { title: "Applicant portal - Cresta Reign Academy Admissions" },
-      {
-        name: "description",
-        content:
-          "Start, continue and track your Cresta Reign Academy application in the secure applicant portal.",
-      },
-      { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Applicant portal - Cresta Reign Academy Admissions" },
-      {
-        property: "og:description",
-        content: "Start, continue and track your Cresta Reign Academy application.",
-      },
+      { title: `${title} - Admissions` },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
     ],
   }),
-  component: () => (
-    <AuthGate
-      title="Apply to Cresta Reign Academy"
-      description="Tell us about the learner and your preferred programme. You do not need to create an account: we open a private application session for you, then guide you through each step."
-      publicApplicant
-    >
-      {(user) => <Dashboard userId={user.id} email={user.email ?? ""} />}
-    </AuthGate>
-  ),
+  component: ApplyPage,
 });
 
-function Dashboard({ userId, email }: { userId: string; email: string }) {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const applications = useQuery(myApplicationsQuery());
-  const periods = useQuery(periodsQuery());
-  const notifications = useQuery(notificationsQuery());
+function optionsQuery() {
+  return {
+    queryKey: ["public", "apply-options"],
+    queryFn: async () => {
+      const [periods, grades] = await Promise.all([
+        supabase.from("admissions_periods").select("id, name, academic_year, instructions, application_fee_cents, currency, closes_at").eq("is_active", true).order("opens_at", { ascending: false }),
+        supabase.from("grade_levels").select("id, name, sort_order").eq("is_active", true).order("sort_order"),
+      ]);
+      return { periods: periods.data ?? [], grades: grades.data ?? [] };
+    },
+  };
+}
+
+function ApplyPage() {
+  const options = useQuery(optionsQuery());
+  const submit = useServerFn(submitPublicApplication);
+  const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [reference, setReference] = useState<string | null>(null);
 
-  const start = useMutation({
-    mutationFn: async () => {
-      const activePeriod = periods.data?.[0]?.id ?? null;
-      return createApplication(userId, activePeriod);
-    },
-    onSuccess: async (app) => {
-      await queryClient.invalidateQueries({ queryKey: ["applications", "mine"] });
-      void navigate({ to: "/apply/application/$id", params: { id: app.id } });
-    },
-    onError: (err: Error) => setError(err.message),
-  });
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const value = (key: string) => String(form.get(key) ?? "").trim();
+    setBusy(true);
+    setError("");
+    try {
+      const result = await submit({
+        data: {
+          student_first_name: value("student_first_name"),
+          student_last_name: value("student_last_name"),
+          student_dob: value("student_dob"),
+          gender: value("gender"),
+          nationality: value("nationality"),
+          home_address: value("home_address"),
+          guardian_name: value("guardian_name"),
+          guardian_email: value("guardian_email"),
+          guardian_phone: value("guardian_phone"),
+          guardian_relationship: value("guardian_relationship"),
+          period_id: value("period_id") || null,
+          grade_level_id: value("grade_level_id") || null,
+          previous_school: value("previous_school"),
+          previous_grade: value("previous_grade"),
+          medical_notes: value("medical_notes"),
+          message: value("message"),
+        },
+      });
+      setReference(result.reference);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? "We could not send this application. Check the required fields and try again."
+          : "Something went wrong.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
 
-  const unread = (notifications.data ?? []).filter((n) => !n.is_read);
+  if (reference) {
+    return (
+      <div className="container-page py-16">
+        <div className="mx-auto max-w-2xl rounded-3xl border bg-card p-8 text-center shadow-sm">
+          <CheckCircle2 className="mx-auto size-12 text-secondary" aria-hidden="true" />
+          <h1 className="mt-4 text-3xl font-semibold text-purple">Application received</h1>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            Keep this reference number safe. Use it with the parent email address to check progress
+            at any time.
+          </p>
+          <p className="mt-6 rounded-2xl bg-navy-soft px-6 py-4 text-2xl font-bold tracking-wider text-purple">
+            {reference}
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button asChild variant="outline">
+              <Link to="/">Back to website</Link>
+            </Button>
+            <Button onClick={() => setReference(null)}>Send another application</Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="container-page py-10">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-semibold">My applications</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Signed in as {email}</p>
-        </div>
-        <Button onClick={() => start.mutate()} disabled={start.isPending}>
-          <FilePlus2 className="size-4" aria-hidden="true" />
-          {start.isPending ? "Creating…" : "Start new application"}
-        </Button>
+    <div className="container-page py-12">
+      <div className="mx-auto max-w-3xl">
+        <p className="text-xs font-bold tracking-[0.24em] uppercase text-gold">Admissions</p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight text-purple">{title}</h1>
+        <p className="mt-3 text-base leading-7 text-muted-foreground">{description}</p>
+
+        <form className="mt-10 grid gap-8" onSubmit={onSubmit}>
+          <Fieldset legend="Student details">
+            <Field id="student_first_name" label="Student first name" required />
+            <Field id="student_last_name" label="Student last name" required />
+            <Field id="student_dob" label="Date of birth" type="date" required />
+            <Field id="gender" label="Gender" />
+            <Field id="nationality" label="Nationality" />
+            <Field id="home_address" label="Home address" className="sm:col-span-2" />
+          </Fieldset>
+
+          <Fieldset legend="Parent or guardian">
+            <Field id="guardian_name" label="Full name" required />
+            <Field id="guardian_relationship" label="Relationship to student" />
+            <Field id="guardian_email" label="Email address" type="email" required />
+            <Field id="guardian_phone" label="Phone number" required />
+          </Fieldset>
+
+          <Fieldset legend="Programme">
+            <div className="grid gap-2">
+              <Label htmlFor="period_id">Intake</Label>
+              <select id="period_id" name="period_id" className="h-10 rounded-md border bg-background px-3 text-sm">
+                <option value="">Not sure yet</option>
+                {(options.data?.periods ?? []).map((period) => (
+                  <option key={period.id} value={period.id}>
+                    {period.name} ({period.academic_year})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="grade_level_id">Grade or level applied for</Label>
+              <select id="grade_level_id" name="grade_level_id" className="h-10 rounded-md border bg-background px-3 text-sm">
+                <option value="">Not sure yet</option>
+                {(options.data?.grades ?? []).map((grade) => (
+                  <option key={grade.id} value={grade.id}>
+                    {grade.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <Field id="previous_school" label="Previous school" />
+            <Field id="previous_grade" label="Last grade completed" />
+          </Fieldset>
+
+          <Fieldset legend="Anything else we should know">
+            <div className="grid gap-2 sm:col-span-2">
+              <Label htmlFor="medical_notes">Medical or learning support notes</Label>
+              <Textarea id="medical_notes" name="medical_notes" rows={3} maxLength={1000} />
+            </div>
+            <div className="grid gap-2 sm:col-span-2">
+              <Label htmlFor="message">Message to the admissions office</Label>
+              <Textarea id="message" name="message" rows={3} maxLength={1000} />
+            </div>
+          </Fieldset>
+
+          {error ? (
+            <p role="alert" className="text-sm text-destructive">
+              {error}
+            </p>
+          ) : null}
+
+          <div>
+            <Button type="submit" size="lg" className="rounded-full px-8" disabled={busy}>
+              {busy ? "Sending application..." : "Send application"}
+            </Button>
+            <p className="mt-3 text-xs text-muted-foreground">
+              No account is created. Supporting documents are handed in at the school office or
+              requested by email after review.
+            </p>
+          </div>
+        </form>
+
+        <TrackApplication />
       </div>
-      {error ? (
-        <p role="alert" className="mt-4 text-sm text-destructive">
-          {error}
+    </div>
+  );
+}
+
+function TrackApplication() {
+  const track = useServerFn(trackPublicApplication);
+  const [busy, setBusy] = useState(false);
+  const [result, setResult] = useState<
+    | { reference_code: string | null; status: ApplicationStatus; submitted_at: string | null; student_first_name: string | null; student_last_name: string | null; decision_note: string | null }
+    | null
+  >(null);
+  const [notFound, setNotFound] = useState(false);
+
+  return (
+    <section aria-labelledby="track-heading" className="mt-16 rounded-3xl border bg-muted/40 p-6">
+      <h2 id="track-heading" className="text-xl font-semibold text-purple">
+        Track an application
+      </h2>
+      <p className="mt-1 text-sm text-muted-foreground">
+        Enter the reference number you received and the parent email you used.
+      </p>
+      <form
+        className="mt-4 grid gap-3 sm:grid-cols-[1fr_1fr_auto]"
+        onSubmit={async (event) => {
+          event.preventDefault();
+          const form = new FormData(event.currentTarget);
+          setBusy(true);
+          setNotFound(false);
+          try {
+            const found = await track({
+              data: {
+                reference: String(form.get("reference") ?? "").trim(),
+                email: String(form.get("email") ?? "").trim(),
+              },
+            });
+            setResult(found ?? null);
+            setNotFound(!found);
+          } catch {
+            setNotFound(true);
+            setResult(null);
+          } finally {
+            setBusy(false);
+          }
+        }}
+      >
+        <div className="grid gap-2">
+          <Label htmlFor="track-reference">Reference number</Label>
+          <Input id="track-reference" name="reference" required maxLength={40} />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="track-email">Parent email</Label>
+          <Input id="track-email" name="email" type="email" required maxLength={255} />
+        </div>
+        <div className="flex items-end">
+          <Button type="submit" variant="outline" disabled={busy}>
+            <Search className="size-4" aria-hidden="true" /> Check
+          </Button>
+        </div>
+      </form>
+      {notFound ? (
+        <p className="mt-4 text-sm text-destructive">
+          No application matches that reference and email.
         </p>
       ) : null}
-
-      <section aria-labelledby="apps-heading" className="mt-8">
-        <h2 id="apps-heading" className="sr-only">
-          Applications
-        </h2>
-        {applications.isLoading ? (
-          <div className="grid gap-4">
-            <Skeleton className="h-28 w-full rounded-xl" />
-            <Skeleton className="h-28 w-full rounded-xl" />
-          </div>
-        ) : applications.isError ? (
-          <ErrorState onRetry={() => void applications.refetch()} />
-        ) : (applications.data ?? []).length === 0 ? (
-          <EmptyState
-            title="No applications yet"
-            description="Start an application to begin. Your progress is saved automatically as you type."
-            icon={<FileText className="size-5" aria-hidden="true" />}
-            action={<Button onClick={() => start.mutate()}>Start new application</Button>}
-          />
-        ) : (
-          <ul className="grid gap-4">
-            {(applications.data ?? []).map((app) => {
-              const percent = completionPercent(app, 1);
-              const editable = app.status === "draft" || app.status === "documents_requested";
-              return (
-                <li key={app.id} className="rounded-xl border bg-card p-5">
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="text-lg font-semibold">
-                          {app.student_first_name || app.student_last_name
-                            ? `${app.student_first_name ?? ""} ${app.student_last_name ?? ""}`.trim()
-                            : "Untitled application"}
-                        </h3>
-                        <Badge variant={app.status === "draft" ? "secondary" : "default"}>
-                          {STATUS_LABELS[app.status]}
-                        </Badge>
-                      </div>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {app.reference_code
-                          ? `Reference ${app.reference_code}`
-                          : "Reference issued on submission"}
-                        {" · "}
-                        Updated {new Date(app.updated_at).toLocaleString()}
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      {editable ? (
-                        <Button asChild size="sm">
-                          <Link to="/apply/application/$id" params={{ id: app.id }}>
-                            Continue
-                          </Link>
-                        </Button>
-                      ) : null}
-                      <Button asChild size="sm" variant="outline">
-                        <Link to="/apply/status/$id" params={{ id: app.id }}>
-                          View status
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                  {app.status === "draft" ? (
-                    <div className="mt-4">
-                      <Progress value={percent} aria-label="Application completeness" />
-                      <p className="mt-2 text-xs text-muted-foreground">{percent}% complete</p>
-                    </div>
-                  ) : null}
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </section>
-
-      <section aria-labelledby="notif-heading" className="mt-12">
-        <h2 id="notif-heading" className="flex items-center gap-2 text-xl font-semibold">
-          <Bell className="size-5" aria-hidden="true" />
-          Notifications
-          {unread.length ? <Badge variant="secondary">{unread.length} new</Badge> : null}
-        </h2>
-        {notifications.isLoading ? (
-          <Skeleton className="mt-4 h-24 w-full rounded-xl" />
-        ) : (notifications.data ?? []).length === 0 ? (
-          <p className="mt-4 text-sm text-muted-foreground">
-            You have no notifications yet. Updates about your application will appear here.
+      {result ? (
+        <div className="mt-4 rounded-2xl border bg-card p-4 text-sm">
+          <p className="font-semibold text-purple">
+            {`${result.student_first_name ?? ""} ${result.student_last_name ?? ""}`.trim() || "Application"}
           </p>
-        ) : (
-          <ul className="mt-4 grid gap-3">
-            {(notifications.data ?? []).map((n) => (
-              <li
-                key={n.id}
-                className={`rounded-xl border p-4 ${n.is_read ? "bg-card" : "border-secondary/40 bg-forest-soft"}`}
-              >
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div>
-                    <p className="font-medium">{n.title}</p>
-                    {n.body ? <p className="mt-1 text-sm text-muted-foreground">{n.body}</p> : null}
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      {new Date(n.created_at).toLocaleString()}
-                    </p>
-                  </div>
-                  {!n.is_read ? (
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={async () => {
-                        await markNotificationRead(n.id);
-                        await queryClient.invalidateQueries({ queryKey: ["notifications"] });
-                      }}
-                    >
-                      Mark read
-                    </Button>
-                  ) : null}
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+          <p className="mt-1 text-muted-foreground">
+            {result.reference_code} - {STATUS_LABELS[result.status]}
+            {result.submitted_at
+              ? ` - sent ${new Date(result.submitted_at).toLocaleDateString()}`
+              : ""}
+          </p>
+          {result.decision_note ? <p className="mt-2">{result.decision_note}</p> : null}
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+function Fieldset({ legend, children }: { legend: string; children: React.ReactNode }) {
+  return (
+    <fieldset className="rounded-3xl border bg-card p-6">
+      <legend className="px-2 text-sm font-bold tracking-[0.14em] uppercase text-royal">
+        {legend}
+      </legend>
+      <div className="grid gap-4 sm:grid-cols-2">{children}</div>
+    </fieldset>
+  );
+}
+
+function Field({
+  id,
+  label,
+  type = "text",
+  required = false,
+  className = "",
+}: {
+  id: string;
+  label: string;
+  type?: string;
+  required?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={`grid gap-2 ${className}`}>
+      <Label htmlFor={id}>
+        {label}
+        {required ? " *" : ""}
+      </Label>
+      <Input id={id} name={id} type={type} required={required} maxLength={300} />
     </div>
   );
 }
