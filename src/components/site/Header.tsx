@@ -1,19 +1,26 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { GraduationCap, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { mainNav, siteConfig } from "@/lib/site-config";
+import logo from "@/assets/cresta-reign-logo.png.asset.json";
+
+export function BrandMark({ className = "size-11" }: { className?: string }) {
+  return <img src={logo.url} alt="Cresta Reign Academy crest" className={`${className} object-contain`} />;
+}
 
 function Brand() {
   return (
     <Link to="/" className="flex items-center gap-3" aria-label={`${siteConfig.name} home`}>
-      <span className="flex size-11 items-center justify-center rounded-full border-2 border-gold bg-primary text-primary-foreground">
-        <GraduationCap className="size-5" aria-hidden="true" />
-      </span>
+      <BrandMark className="size-12" />
       <span className="leading-tight">
-        <span className="block text-base font-extrabold text-primary">{siteConfig.name}</span>
-        <span className="block text-[11px] tracking-wide text-muted-foreground">{siteConfig.tagline}</span>
+        <span className="block text-base font-extrabold tracking-tight text-purple">
+          Cresta Reign <span className="text-gold">Academy</span>
+        </span>
+        <span className="block text-[11px] font-semibold tracking-wide text-royal">
+          {siteConfig.tagline}
+        </span>
       </span>
     </Link>
   );
