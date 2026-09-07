@@ -22,6 +22,7 @@ import { Route as PublicGalleryRouteImport } from './routes/_public.gallery'
 import { Route as PublicNewsRouteImport } from './routes/_public.news'
 import { Route as PublicStaffRouteImport } from './routes/_public.staff'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminStudentsRouteImport } from './routes/admin.students'
 import { Route as ApplyIndexRouteImport } from './routes/apply.index'
 import { Route as PublicEventsSlugRouteImport } from './routes/_public.events.$slug'
 import { Route as PublicGallerySlugRouteImport } from './routes/_public.gallery.$slug'
@@ -96,6 +97,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminStudentsRoute = AdminStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ApplyIndexRoute = ApplyIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -154,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof PublicGalleryRouteWithChildren
   '/news': typeof PublicNewsRouteWithChildren
   '/staff': typeof PublicStaffRoute
+  '/admin/students': typeof AdminStudentsRoute
   '/admin/': typeof AdminIndexRoute
   '/apply/': typeof ApplyIndexRoute
   '/events/$slug': typeof PublicEventsSlugRoute
@@ -174,6 +181,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof PublicGalleryRouteWithChildren
   '/news': typeof PublicNewsRouteWithChildren
   '/staff': typeof PublicStaffRoute
+  '/admin/students': typeof AdminStudentsRoute
   '/': typeof PublicIndexRoute
   '/admin': typeof AdminIndexRoute
   '/apply': typeof ApplyIndexRoute
@@ -199,6 +207,7 @@ export interface FileRoutesById {
   '/_public/gallery': typeof PublicGalleryRouteWithChildren
   '/_public/news': typeof PublicNewsRouteWithChildren
   '/_public/staff': typeof PublicStaffRoute
+  '/admin/students': typeof AdminStudentsRoute
   '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/apply/': typeof ApplyIndexRoute
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/news'
     | '/staff'
+    | '/admin/students'
     | '/admin/'
     | '/apply/'
     | '/events/$slug'
@@ -245,6 +255,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/news'
     | '/staff'
+    | '/admin/students'
     | '/'
     | '/admin'
     | '/apply'
@@ -269,6 +280,7 @@ export interface FileRouteTypes {
     | '/_public/gallery'
     | '/_public/news'
     | '/_public/staff'
+    | '/admin/students'
     | '/_public/'
     | '/admin/'
     | '/apply/'
@@ -379,6 +391,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/students': {
+      id: '/admin/students'
+      path: '/students'
+      fullPath: '/admin/students'
+      preLoaderRoute: typeof AdminStudentsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/apply/': {
@@ -511,6 +530,7 @@ const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren)
 
 interface AdminRouteChildren {
+  AdminStudentsRoute: typeof AdminStudentsRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminAdmissionsIdRoute: typeof AdminAdmissionsIdRoute
   AdminAdmissionsSettingsRoute: typeof AdminAdmissionsSettingsRoute
@@ -518,6 +538,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminStudentsRoute: AdminStudentsRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminAdmissionsIdRoute: AdminAdmissionsIdRoute,
   AdminAdmissionsSettingsRoute: AdminAdmissionsSettingsRoute,
