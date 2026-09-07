@@ -27,15 +27,32 @@ function AdminLayout() {
                 </span>
                 <span>{siteConfig.name} Staff</span>
               </Link>
-              <nav aria-label="Admin sections" className="flex flex-wrap items-center gap-1 text-sm">
+              <nav
+                aria-label="Admin sections"
+                className="flex flex-wrap items-center gap-1 text-sm"
+              >
                 <Button asChild variant="ghost" size="sm">
-                  <Link to="/admin" activeOptions={{ exact: true }} activeProps={{ className: "bg-accent" }}>
+                  <Link
+                    to="/admin"
+                    activeOptions={{ exact: true }}
+                    activeProps={{ className: "bg-accent" }}
+                  >
                     Content
                   </Link>
                 </Button>
                 <Button asChild variant="ghost" size="sm">
                   <Link to="/admin/admissions" activeProps={{ className: "bg-accent" }}>
                     Admissions
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/students" activeProps={{ className: "bg-accent" }}>
+                    Students
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/finance" activeProps={{ className: "bg-accent" }}>
+                    Finance
                   </Link>
                 </Button>
                 <Button asChild variant="ghost" size="sm">
@@ -51,7 +68,9 @@ function AdminLayout() {
                 </Button>
               </nav>
             </div>
-            <div className="container-page pb-3 text-xs text-muted-foreground">Signed in as {user.email}</div>
+            <div className="container-page pb-3 text-xs text-muted-foreground">
+              Signed in as {user.email}
+            </div>
           </header>
           <main id="main" className="flex-1 pb-20">
             <Outlet />

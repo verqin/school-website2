@@ -3,7 +3,6 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Loader2 } from "lucide-react";
 import { AuthGate } from "@/components/admissions/AuthGate";
-import { DocumentsPanel } from "@/components/admissions/DocumentsPanel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,7 +14,6 @@ import {
   EDITABLE_STATUSES,
   STEP_TITLES,
   TOTAL_STEPS,
-  applicationDocumentsQuery,
   applicationQuery,
   formDataValue,
   gradeLevelsQuery,
@@ -25,6 +23,7 @@ import {
   stepThreeSchema,
   stepTwoSchema,
   submitApplication,
+  type AcademicHistoryEntry,
   type Application,
 } from "@/lib/admissions";
 
@@ -48,14 +47,30 @@ export const Route = createFileRoute("/apply/application/$id")({
       description="Sign in to continue your application."
       allowSignUp
     >
-      {(user) => <WizardLoader userId={user.id} />}
+      {() => <WizardLoader />}
     </AuthGate>
   ),
 });
 
 type Draft = Record<string, string>;
 
-function WizardLoader({ userId }: { userId: string }) {
+function readAcademicHistory(application: Application): AcademicHistoryEntry[] {
+  const raw = formDataValue(application, "academic_history");
+  if (!raw) return [{ subject: "", result: "" }];
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [{ subject: "", result: "" }];
+    const entries = parsed.filter(
+      (entry): entry is AcademicHistoryEntry =>
+        typeof entry === "object" && entry !== null && "subject" in entry && "result" in entry,
+    );
+    return entries.length ? entries : [{ subject: "", result: "" }];
+  } catch {
+    return [{ subject: "", result: "" }];
+  }
+}
+
+function WizardLoader() {
   const { id } = Route.useParams();
   const application = useQuery(applicationQuery(id));
 
@@ -89,15 +104,14 @@ function WizardLoader({ userId }: { userId: string }) {
       </div>
     );
   }
-  return <Wizard userId={userId} application={application.data} />;
+  return <Wizard application={application.data} />;
 }
 
-function Wizard({ userId, application }: { userId: string; application: Application }) {
+function Wizard({ application }: { application: Application }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const periods = useQuery(periodsQuery());
   const grades = useQuery(gradeLevelsQuery());
-  const documents = useQuery(applicationDocumentsQuery(application.id));
   const editable = EDITABLE_STATUSES.includes(application.status);
 
   const [step, setStep] = useState(application.current_step > 0 ? application.current_step : 1);
@@ -105,6 +119,7 @@ function Wizard({ userId, application }: { userId: string; application: Applicat
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [submitError, setSubmitError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [academicHistory, setAcademicHistory] = useState<AcademicHistoryEntry[]>(() => readAcademicHistory(application));
 
   const [values, setValues] = useState<Draft>(() => ({
     student_first_name: application.student_first_name ?? "",
@@ -148,6 +163,7 @@ function Wizard({ userId, application }: { userId: string; application: Applicat
         gender: values["gender"] ?? "",
         nationality: values["nationality"] ?? "",
         home_address: values["home_address"] ?? "",
+        academic_history: JSON.stringify(academicHistory),
         guardian_relationship: values["guardian_relationship"] ?? "",
         alternate_contact: values["alternate_contact"] ?? "",
         previous_school: values["previous_school"] ?? "",
@@ -157,7 +173,7 @@ function Wizard({ userId, application }: { userId: string; application: Applicat
         referral_source: values["referral_source"] ?? "",
       } as never,
     }),
-    [values, step],
+    [values, academicHistory, step],
   );
 
   /** Autosave: debounced draft persistence while the application is editable. */
@@ -179,7 +195,7 @@ function Wizard({ userId, application }: { userId: string; application: Applicat
   function validateStep(current: number) {
     const schema = current === 1 ? stepOneSchema : current === 2 ? stepTwoSchema : current === 3 ? stepThreeSchema : null;
     if (!schema) return true;
-    const result = schema.safeParse(values);
+    const result = schema.safeParse({ ...values, academic_history: academicHistory });
     if (result.success) {
       setErrors({});
       return true;
@@ -344,6 +360,63 @@ function Wizard({ userId, application }: { userId: string; application: Applicat
             </div>
             <Field label="Previous school (optional)" name="previous_school" values={values} errors={errors} onChange={set} />
             <Field label="Previous grade (optional)" name="previous_grade" values={values} errors={errors} onChange={set} />
+            <div className="sm:col-span-2 rounded-xl border border-secondary/30 bg-secondary/5 p-5">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h2 className="text-lg font-semibold">Academic history</h2>
+                  <p className="mt-1 text-sm text-muted-foreground">Enter previous results as structured subject and result pairs.</p>
+                </div>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    dirty.current = true;
+                    setAcademicHistory((entries) => [...entries, { subject: "", result: "" }]);
+                  }}
+                >
+                  + Add subject
+                </Button>
+              </div>
+              <div className="mt-4 grid gap-3">
+                {academicHistory.map((entry, index) => (
+                  <div key={`${index}-${entry.subject}`} className="grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+                    <div className="grid gap-2">
+                      <Label htmlFor={`subject-${index}`}>Subject</Label>
+                      <Input
+                        id={`subject-${index}`}
+                        placeholder="Mathematics"
+                        value={entry.subject}
+                        onChange={(event) => {
+                          dirty.current = true;
+                          setAcademicHistory((entries) => entries.map((item, itemIndex) => itemIndex === index ? { ...item, subject: event.target.value } : item));
+                        }}
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor={`result-${index}`}>Result</Label>
+                      <Input
+                        id={`result-${index}`}
+                        placeholder="78%"
+                        value={entry.result}
+                        onChange={(event) => {
+                          dirty.current = true;
+                          setAcademicHistory((entries) => entries.map((item, itemIndex) => itemIndex === index ? { ...item, result: event.target.value } : item));
+                        }}
+                      />
+                    </div>
+                    {academicHistory.length > 1 ? (
+                      <Button type="button" variant="ghost" onClick={() => {
+                        dirty.current = true;
+                        setAcademicHistory((entries) => entries.filter((_, itemIndex) => itemIndex !== index));
+                      }} aria-label={`Remove subject ${index + 1}`}>Remove</Button>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+              <FieldError message={errors["academic_history"]} />
+              <p className="mt-3 text-xs text-muted-foreground">Example: Mathematics : 78%, English : 72%, Science : 81%.</p>
+            </div>
             <div className="sm:col-span-2">
               <AreaField label="Achievements or interests (optional)" name="achievements" values={values} errors={errors} onChange={set} />
             </div>
@@ -361,13 +434,23 @@ function Wizard({ userId, application }: { userId: string; application: Applicat
         ) : null}
 
         {step === 4 ? (
-          <DocumentsPanel
-            applicationId={application.id}
-            userId={userId}
-            periodId={values["period_id"] || null}
-            gradeLevelId={values["grade_level_id"] || null}
-            canUpload={editable}
-          />
+          <div className="grid gap-5">
+            <div>
+              <h2 className="text-xl font-semibold">Supporting documents</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Supporting documents are not required during the initial application. If your application is accepted, please submit the required originals in person at Cresta Reign Academy.
+              </p>
+            </div>
+            <div className="rounded-xl border border-secondary/30 bg-secondary/5 p-5">
+              <h3 className="font-medium">Documents to prepare after acceptance</h3>
+              <ul className="mt-3 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
+                <li>Birth certificate</li>
+                <li>Previous school report</li>
+                <li>Passport photograph</li>
+                <li>Transfer letter, if applicable</li>
+              </ul>
+            </div>
+          </div>
         ) : null}
 
         {step === 5 ? (
@@ -381,7 +464,7 @@ function Wizard({ userId, application }: { userId: string; application: Applicat
               <Review label="Phone" value={values["guardian_phone"] ?? ""} />
               <Review label="Intake" value={periodName} />
               <Review label="Grade level" value={gradeName} />
-              <Review label="Documents uploaded" value={String((documents.data ?? []).length)} />
+              <Review label="Previous results" value={`${academicHistory.filter((entry) => entry.subject && entry.result).length} subjects entered`} />
             </dl>
             <p className="text-sm text-muted-foreground">
               By submitting you confirm the information provided is accurate. After submission the form locks and the

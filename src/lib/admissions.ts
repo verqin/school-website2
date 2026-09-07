@@ -70,9 +70,14 @@ export const STEP_TITLES = [
   "Student details",
   "Parent / guardian",
   "Academic background",
-  "Documents",
+  "Supporting documents",
   "Review & submit",
 ];
+
+export type AcademicHistoryEntry = {
+  subject: string;
+  result: string;
+};
 
 function unwrap<T>(result: { data: T | null; error: { message: string } | null }): T {
   if (result.error) throw new Error(result.error.message);
@@ -113,6 +118,9 @@ export const stepThreeSchema = z.object({
   grade_level_id: z.string().uuid("Choose a grade level"),
   previous_school: trimmed(160).optional(),
   previous_grade: trimmed(60).optional(),
+  academic_history: z
+    .array(z.object({ subject: trimmed(80).min(1, "Enter a subject"), result: trimmed(40).min(1, "Enter a result") }))
+    .min(1, "Add at least one previous subject and result"),
   achievements: trimmed(1000).optional(),
   medical_notes: trimmed(1000).optional(),
   referral_source: trimmed(120).optional(),

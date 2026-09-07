@@ -25,18 +25,22 @@ export const Route = createFileRoute("/apply/")({
       { title: "Applicant portal - Cresta Reign Academy Admissions" },
       {
         name: "description",
-        content: "Start, continue and track your Cresta Reign Academy application in the secure applicant portal.",
+        content:
+          "Start, continue and track your Cresta Reign Academy application in the secure applicant portal.",
       },
       { name: "robots", content: "noindex" },
       { property: "og:title", content: "Applicant portal - Cresta Reign Academy Admissions" },
-      { property: "og:description", content: "Start, continue and track your Cresta Reign Academy application." },
+      {
+        property: "og:description",
+        content: "Start, continue and track your Cresta Reign Academy application.",
+      },
     ],
   }),
   component: () => (
     <AuthGate
-      title="Applicant sign in"
-      description="Create an account or sign in to start and track your application."
-      allowSignUp
+      title="Apply to Cresta Reign Academy"
+      description="Tell us about the learner and your preferred programme. You do not need to create an account: we open a private application session for you, then guide you through each step."
+      publicApplicant
     >
       {(user) => <Dashboard userId={user.id} email={user.email ?? ""} />}
     </AuthGate>
@@ -121,7 +125,9 @@ function Dashboard({ userId, email }: { userId: string; email: string }) {
                         </Badge>
                       </div>
                       <p className="mt-1 text-sm text-muted-foreground">
-                        {app.reference_code ? `Reference ${app.reference_code}` : "Reference issued on submission"}
+                        {app.reference_code
+                          ? `Reference ${app.reference_code}`
+                          : "Reference issued on submission"}
                         {" · "}
                         Updated {new Date(app.updated_at).toLocaleString()}
                       </p>
