@@ -20,12 +20,14 @@ export function AuthGate({
   description,
   allowSignUp = false,
   requireStaff = false,
+  publicApplicant = false,
   children,
 }: {
   title: string;
   description: string;
   allowSignUp?: boolean | undefined;
   requireStaff?: boolean | undefined;
+  publicApplicant?: boolean | undefined;
   children: (user: User) => ReactNode;
 }) {
   const { user, loading } = useSupabaseUser();
@@ -44,9 +46,13 @@ export function AuthGate({
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const email = String(form.get("email") ?? "").trim().slice(0, 255);
+    const email = String(form.get("email") ?? "")
+      .trim()
+      .slice(0, 255);
     const password = String(form.get("password") ?? "");
-    const fullName = String(form.get("full_name") ?? "").trim().slice(0, 120);
+    const fullName = String(form.get("full_name") ?? "")
+      .trim()
+      .slice(0, 120);
     if (!email || password.length < 8) {
       setError("Enter your email and a password of at least 8 characters.");
       return;
@@ -65,16 +71,27 @@ export function AuthGate({
       });
       setBusy(false);
       if (signUpError) {
-        setError(signUpError.message.includes("confirm") ? "Check your email to confirm your application account." : "We could not create that application account. Please check your details and try again.");
+        setError(
+          signUpError.message.includes("confirm")
+            ? "Check your email to confirm your application account."
+            : "We could not create that application account. Please check your details and try again.",
+        );
         return;
       }
-      setMessage("Account created. If email confirmation is required you will need to confirm before signing in.");
+      setMessage(
+        "Account created. If email confirmation is required you will need to confirm before signing in.",
+      );
       setMode("signin");
       return;
     }
     const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (signInError) setError(signInError.message.toLowerCase().includes("confirm") ? "Confirm your email before signing in." : "Invalid email or password.");
+    if (signInError)
+      setError(
+        signInError.message.toLowerCase().includes("confirm")
+          ? "Confirm your email before signing in."
+          : "Invalid email or password.",
+      );
   }
 
   if (loading) {
@@ -87,6 +104,58 @@ export function AuthGate({
   }
 
   if (!user) {
+    if (publicApplicant) {
+      return (
+        <div className="container-page py-16">
+          <div className="mx-auto max-w-3xl rounded-[2rem] border border-white/70 bg-card/75 p-8 shadow-elite backdrop-blur-xl md:p-12">
+            <div className="max-w-2xl">
+              <p className="text-xs font-bold tracking-[0.24em] uppercase text-gold">
+                Admissions, made human
+              </p>
+              <h1 className="mt-3 text-4xl font-semibold tracking-tight text-primary md:text-5xl">
+                {title}
+              </h1>
+              <p className="mt-4 text-base leading-7 text-muted-foreground">{description}</p>
+              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                {[
+                  ["No account", "Apply without creating a password."],
+                  ["Five minutes", "Save your place and return when ready."],
+                  ["Private by design", "Your application is only visible to you and staff."],
+                ].map(([label, copy]) => (
+                  <div key={label} className="neo rounded-2xl p-4">
+                    <p className="font-semibold text-primary">{label}</p>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{copy}</p>
+                  </div>
+                ))}
+              </div>
+              <Button
+                className="skeu mt-8 rounded-full px-7"
+                disabled={busy}
+                onClick={async () => {
+                  setBusy(true);
+                  setError("");
+                  const { error: anonymousError } = await supabase.auth.signInAnonymously();
+                  setBusy(false);
+                  if (anonymousError) {
+                    setError(
+                      "We could not open a private application session. Please try again or contact admissions.",
+                    );
+                  }
+                }}
+              >
+                {busy ? "Opening application…" : "Begin application"}
+              </Button>
+              {error ? (
+                <p role="alert" className="mt-4 text-sm text-destructive">
+                  {error}
+                </p>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="flex min-h-[70vh] items-center justify-center px-4 py-16">
         <div className="w-full max-w-sm rounded-2xl border bg-card p-8 shadow-sm">
@@ -101,7 +170,14 @@ export function AuthGate({
             ) : null}
             <div className="grid gap-2">
               <Label htmlFor="gate-email">Email</Label>
-              <Input id="gate-email" name="email" type="email" required autoComplete="email" maxLength={255} />
+              <Input
+                id="gate-email"
+                name="email"
+                type="email"
+                required
+                autoComplete="email"
+                maxLength={255}
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="gate-password">Password</Label>
@@ -135,7 +211,9 @@ export function AuthGate({
                 setError("");
               }}
             >
-              {mode === "signin" ? "New applicant? Create an account" : "Already have an account? Sign in"}
+              {mode === "signin"
+                ? "New applicant? Create an account"
+                : "Already have an account? Sign in"}
             </button>
           ) : null}
           <div className="mt-6 text-sm">
