@@ -1,0 +1,1 @@
+ALTER TABLE public.applications ALTER COLUMN applicant_user_id DROP NOT NULL;

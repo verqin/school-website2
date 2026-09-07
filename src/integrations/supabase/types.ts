@@ -645,7 +645,7 @@ export type Database = {
       }
       applications: {
         Row: {
-          applicant_user_id: string
+          applicant_user_id: string | null
           assigned_to: string | null
           created_at: string
           current_step: number
@@ -671,7 +671,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          applicant_user_id: string
+          applicant_user_id?: string | null
           assigned_to?: string | null
           created_at?: string
           current_step?: number
@@ -697,7 +697,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          applicant_user_id?: string
+          applicant_user_id?: string | null
           assigned_to?: string | null
           created_at?: string
           current_step?: number
@@ -3664,7 +3664,7 @@ export type Database = {
           _status: Database["public"]["Enums"]["application_status"]
         }
         Returns: {
-          applicant_user_id: string
+          applicant_user_id: string | null
           assigned_to: string | null
           created_at: string
           current_step: number
@@ -3728,7 +3728,7 @@ export type Database = {
       submit_application: {
         Args: { _application_id: string }
         Returns: {
-          applicant_user_id: string
+          applicant_user_id: string | null
           assigned_to: string | null
           created_at: string
           current_step: number
