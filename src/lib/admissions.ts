@@ -572,7 +572,7 @@ export async function verifyDocument(
 
 export async function requestDocuments(params: {
   applicationId: string;
-  applicantUserId: string;
+  applicantUserId: string | null;
   label: string;
   message: string;
   staffId: string;
@@ -616,7 +616,7 @@ export async function assignApplication(
 
 export async function scheduleInterview(params: {
   applicationId: string;
-  applicantUserId: string;
+  applicantUserId: string | null;
   staffId: string;
   scheduledAt: string;
   mode: string;
