@@ -13,6 +13,7 @@ import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as ParentRouteImport } from './routes/parent'
+import { Route as TeacherRouteImport } from './routes/teacher'
 import { Route as PublicIndexRouteImport } from './routes/_public.index'
 import { Route as PublicAboutRouteImport } from './routes/_public.about'
 import { Route as PublicAcademicsRouteImport } from './routes/_public.academics'
@@ -52,6 +53,11 @@ const ApplyRoute = ApplyRouteImport.update({
 const ParentRoute = ParentRouteImport.update({
   id: '/parent',
   path: '/parent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherRoute = TeacherRouteImport.update({
+  id: '/teacher',
+  path: '/teacher',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
@@ -165,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/apply': typeof ApplyRouteWithChildren
   '/parent': typeof ParentRoute
+  '/teacher': typeof TeacherRoute
   '/about': typeof PublicAboutRoute
   '/academics': typeof PublicAcademicsRoute
   '/admissions': typeof PublicAdmissionsRoute
@@ -188,6 +195,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/parent': typeof ParentRoute
+  '/teacher': typeof TeacherRoute
   '/about': typeof PublicAboutRoute
   '/academics': typeof PublicAcademicsRoute
   '/admissions': typeof PublicAdmissionsRoute
@@ -216,6 +224,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/apply': typeof ApplyRouteWithChildren
   '/parent': typeof ParentRoute
+  '/teacher': typeof TeacherRoute
   '/_public/about': typeof PublicAboutRoute
   '/_public/academics': typeof PublicAcademicsRoute
   '/_public/admissions': typeof PublicAdmissionsRoute
@@ -245,6 +254,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/apply'
     | '/parent'
+    | '/teacher'
     | '/about'
     | '/academics'
     | '/admissions'
@@ -268,6 +278,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/parent'
+    | '/teacher'
     | '/about'
     | '/academics'
     | '/admissions'
@@ -295,6 +306,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/apply'
     | '/parent'
+    | '/teacher'
     | '/_public/about'
     | '/_public/academics'
     | '/_public/admissions'
@@ -323,6 +335,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   ApplyRoute: typeof ApplyRouteWithChildren
   ParentRoute: typeof ParentRoute
+  TeacherRoute: typeof TeacherRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -353,6 +366,13 @@ declare module '@tanstack/react-router' {
       path: '/parent'
       fullPath: '/parent'
       preLoaderRoute: typeof ParentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher': {
+      id: '/teacher'
+      path: '/teacher'
+      fullPath: '/teacher'
+      preLoaderRoute: typeof TeacherRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_public/': {
@@ -607,6 +627,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   ApplyRoute: ApplyRouteWithChildren,
   ParentRoute: ParentRoute,
+  TeacherRoute: TeacherRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
