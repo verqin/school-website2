@@ -1,5 +1,6 @@
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
-import { ShieldCheck } from "lucide-react";
+import { Search, ShieldCheck } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { AuthGate } from "@/components/admissions/AuthGate";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -27,6 +28,10 @@ function AdminLayout() {
                 </span>
                 <span>{siteConfig.name} Staff</span>
               </Link>
+              <div className="relative order-3 w-full md:order-none md:w-64">
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                <Input className="h-9 bg-muted/40 pl-9" placeholder="Search authorised records" aria-label="Global search" />
+              </div>
               <nav
                 aria-label="Admin sections"
                 className="flex flex-wrap items-center gap-1 text-sm"

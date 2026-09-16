@@ -28,7 +28,11 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminAcademicsRouteImport } from './routes/admin.academics'
 import { Route as AdminAiRouteImport } from './routes/admin.ai'
 import { Route as AdminAttendanceRouteImport } from './routes/admin.attendance'
+import { Route as AdminCalendarRouteImport } from './routes/admin.calendar'
+import { Route as AdminCertificatesRouteImport } from './routes/admin.certificates'
 import { Route as AdminCommunicationRouteImport } from './routes/admin.communication'
+import { Route as AdminDisciplineRouteImport } from './routes/admin.discipline'
+import { Route as AdminDocumentsRouteImport } from './routes/admin.documents'
 import { Route as AdminFinanceRouteImport } from './routes/admin.finance'
 import { Route as AdminGovernanceRouteImport } from './routes/admin.governance'
 import { Route as AdminInventoryRouteImport } from './routes/admin.inventory'
@@ -144,9 +148,29 @@ const AdminAttendanceRoute = AdminAttendanceRouteImport.update({
   path: '/attendance',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminCalendarRoute = AdminCalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCertificatesRoute = AdminCertificatesRouteImport.update({
+  id: '/certificates',
+  path: '/certificates',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminCommunicationRoute = AdminCommunicationRouteImport.update({
   id: '/communication',
   path: '/communication',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDisciplineRoute = AdminDisciplineRouteImport.update({
+  id: '/discipline',
+  path: '/discipline',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDocumentsRoute = AdminDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminFinanceRoute = AdminFinanceRouteImport.update({
@@ -268,7 +292,11 @@ export interface FileRoutesByFullPath {
   '/admin/academics': typeof AdminAcademicsRoute
   '/admin/ai': typeof AdminAiRoute
   '/admin/attendance': typeof AdminAttendanceRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
   '/admin/communication': typeof AdminCommunicationRoute
+  '/admin/discipline': typeof AdminDisciplineRoute
+  '/admin/documents': typeof AdminDocumentsRoute
   '/admin/finance': typeof AdminFinanceRouteWithChildren
   '/admin/governance': typeof AdminGovernanceRoute
   '/admin/inventory': typeof AdminInventoryRoute
@@ -306,7 +334,11 @@ export interface FileRoutesByTo {
   '/admin/academics': typeof AdminAcademicsRoute
   '/admin/ai': typeof AdminAiRoute
   '/admin/attendance': typeof AdminAttendanceRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
   '/admin/communication': typeof AdminCommunicationRoute
+  '/admin/discipline': typeof AdminDisciplineRoute
+  '/admin/documents': typeof AdminDocumentsRoute
   '/admin/finance': typeof AdminFinanceRouteWithChildren
   '/admin/governance': typeof AdminGovernanceRoute
   '/admin/inventory': typeof AdminInventoryRoute
@@ -349,7 +381,11 @@ export interface FileRoutesById {
   '/admin/academics': typeof AdminAcademicsRoute
   '/admin/ai': typeof AdminAiRoute
   '/admin/attendance': typeof AdminAttendanceRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
   '/admin/communication': typeof AdminCommunicationRoute
+  '/admin/discipline': typeof AdminDisciplineRoute
+  '/admin/documents': typeof AdminDocumentsRoute
   '/admin/finance': typeof AdminFinanceRouteWithChildren
   '/admin/governance': typeof AdminGovernanceRoute
   '/admin/inventory': typeof AdminInventoryRoute
@@ -393,7 +429,11 @@ export interface FileRouteTypes {
     | '/admin/academics'
     | '/admin/ai'
     | '/admin/attendance'
+    | '/admin/calendar'
+    | '/admin/certificates'
     | '/admin/communication'
+    | '/admin/discipline'
+    | '/admin/documents'
     | '/admin/finance'
     | '/admin/governance'
     | '/admin/inventory'
@@ -431,7 +471,11 @@ export interface FileRouteTypes {
     | '/admin/academics'
     | '/admin/ai'
     | '/admin/attendance'
+    | '/admin/calendar'
+    | '/admin/certificates'
     | '/admin/communication'
+    | '/admin/discipline'
+    | '/admin/documents'
     | '/admin/finance'
     | '/admin/governance'
     | '/admin/inventory'
@@ -473,7 +517,11 @@ export interface FileRouteTypes {
     | '/admin/academics'
     | '/admin/ai'
     | '/admin/attendance'
+    | '/admin/calendar'
+    | '/admin/certificates'
     | '/admin/communication'
+    | '/admin/discipline'
+    | '/admin/documents'
     | '/admin/finance'
     | '/admin/governance'
     | '/admin/inventory'
@@ -641,11 +689,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAttendanceRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/calendar': {
+      id: '/admin/calendar'
+      path: '/calendar'
+      fullPath: '/admin/calendar'
+      preLoaderRoute: typeof AdminCalendarRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/certificates': {
+      id: '/admin/certificates'
+      path: '/certificates'
+      fullPath: '/admin/certificates'
+      preLoaderRoute: typeof AdminCertificatesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/communication': {
       id: '/admin/communication'
       path: '/communication'
       fullPath: '/admin/communication'
       preLoaderRoute: typeof AdminCommunicationRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/discipline': {
+      id: '/admin/discipline'
+      path: '/discipline'
+      fullPath: '/admin/discipline'
+      preLoaderRoute: typeof AdminDisciplineRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/documents': {
+      id: '/admin/documents'
+      path: '/documents'
+      fullPath: '/admin/documents'
+      preLoaderRoute: typeof AdminDocumentsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/finance': {
@@ -872,7 +948,11 @@ interface AdminRouteChildren {
   AdminAcademicsRoute: typeof AdminAcademicsRoute
   AdminAiRoute: typeof AdminAiRoute
   AdminAttendanceRoute: typeof AdminAttendanceRoute
+  AdminCalendarRoute: typeof AdminCalendarRoute
+  AdminCertificatesRoute: typeof AdminCertificatesRoute
   AdminCommunicationRoute: typeof AdminCommunicationRoute
+  AdminDisciplineRoute: typeof AdminDisciplineRoute
+  AdminDocumentsRoute: typeof AdminDocumentsRoute
   AdminFinanceRoute: typeof AdminFinanceRouteWithChildren
   AdminGovernanceRoute: typeof AdminGovernanceRoute
   AdminInventoryRoute: typeof AdminInventoryRoute
@@ -893,7 +973,11 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminAcademicsRoute: AdminAcademicsRoute,
   AdminAiRoute: AdminAiRoute,
   AdminAttendanceRoute: AdminAttendanceRoute,
+  AdminCalendarRoute: AdminCalendarRoute,
+  AdminCertificatesRoute: AdminCertificatesRoute,
   AdminCommunicationRoute: AdminCommunicationRoute,
+  AdminDisciplineRoute: AdminDisciplineRoute,
+  AdminDocumentsRoute: AdminDocumentsRoute,
   AdminFinanceRoute: AdminFinanceRouteWithChildren,
   AdminGovernanceRoute: AdminGovernanceRoute,
   AdminInventoryRoute: AdminInventoryRoute,
