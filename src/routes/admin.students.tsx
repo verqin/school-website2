@@ -77,7 +77,7 @@ function StudentInformation() {
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
-        <Summary label="Enrolled learners" value="1,284" detail="Across Forms 1–6" />
+        <Summary label="Enrolled learners" value="1,284" detail="Across Forms 1-6" />
         <Summary label="Attendance below 80%" value="18" detail="Pastoral follow-up" />
         <Summary label="Profiles needing documents" value="27" detail="Physical verification" />
       </div>
