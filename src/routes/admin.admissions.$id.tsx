@@ -38,10 +38,10 @@ export const Route = createFileRoute("/admin/admissions/$id")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Application review - Sample1 School Staff" },
+      { title: "Application review - Cresta Reign Academy Staff" },
       { name: "description", content: "Review an application, verify documents, schedule interviews and record decisions." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Application review - Sample1 School Staff" },
+      { property: "og:title", content: "Application review - Cresta Reign Academy Staff" },
       { property: "og:description", content: "Review applications, documents, interviews and decisions." },
     ],
   }),

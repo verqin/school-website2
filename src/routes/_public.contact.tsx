@@ -12,12 +12,12 @@ import { ImageHero } from "@/components/site/blocks";
 import contactHero from "@/assets/contact-hero.jpg";
 
 const title = "Contact Us";
-const description = "Get in touch with the Sample1 School office - enquiries, visits and general questions.";
+const description = "Get in touch with the Cresta Reign Academy office - enquiries, visits and general questions.";
 
 export const Route = createFileRoute("/_public/contact")({
   head: () => ({
     meta: [
-      { title: `${title} - Sample1 School` },
+      { title: `${title} - Cresta Reign Academy` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
@@ -51,7 +51,7 @@ function ContactPage() {
 
   return (
     <>
-      <ImageHero image={contactHero} imageAlt="Entrance to the Sample1 School campus" eyebrow="Contact" title={title} description={description} />
+      <ImageHero image={contactHero} imageAlt="Entrance to the Cresta Reign Academy campus" eyebrow="Contact" title={title} description={description} />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr]">
           <div>

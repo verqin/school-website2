@@ -20,14 +20,14 @@ export const Route = createFileRoute("/apply/status/$id")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Application status - Sample1 School Admissions" },
+      { title: "Application status - Cresta Reign Academy Admissions" },
       {
         name: "description",
-        content: "Track the progress of your Sample1 School application, documents and interview details.",
+        content: "Track the progress of your Cresta Reign Academy application, documents and interview details.",
       },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Application status - Sample1 School Admissions" },
-      { property: "og:description", content: "Track the progress of your Sample1 School application." },
+      { property: "og:title", content: "Application status - Cresta Reign Academy Admissions" },
+      { property: "og:description", content: "Track the progress of your Cresta Reign Academy application." },
     ],
   }),
   component: () => (

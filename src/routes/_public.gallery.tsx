@@ -7,12 +7,12 @@ import { ImageHero } from "@/components/site/blocks";
 import galleryHero from "@/assets/gallery-hero.jpg";
 
 const title = "Photo Gallery";
-const description = "Albums from school life at Sample1 School - events, trips, sport, arts and everyday moments.";
+const description = "Albums from school life at Cresta Reign Academy - events, trips, sport, arts and everyday moments.";
 
 export const Route = createFileRoute("/_public/gallery")({
   head: () => ({
     meta: [
-      { title: `${title} - Sample1 School` },
+      { title: `${title} - Cresta Reign Academy` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
@@ -26,7 +26,7 @@ function GalleryPage() {
 
   return (
     <>
-      <ImageHero image={galleryHero} imageAlt="Sample1 School pupils in an arts and music session" eyebrow="Gallery" title={title} description={description} />
+      <ImageHero image={galleryHero} imageAlt="Cresta Reign Academy pupils in an arts and music session" eyebrow="Gallery" title={title} description={description} />
       <Section>
         {albums.isPending ? (
           <CardSkeletonGrid count={6} />
