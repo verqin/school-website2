@@ -1,5 +1,6 @@
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
-import { ShieldCheck } from "lucide-react";
+import { Search, ShieldCheck } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { AuthGate } from "@/components/admissions/AuthGate";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -27,6 +28,10 @@ function AdminLayout() {
                 </span>
                 <span>{siteConfig.name} Staff</span>
               </Link>
+              <div className="relative order-3 w-full md:order-none md:w-64">
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                <Input className="h-9 bg-muted/40 pl-9" placeholder="Search authorised records" aria-label="Global search" />
+              </div>
               <nav
                 aria-label="Admin sections"
                 className="flex flex-wrap items-center gap-1 text-sm"
@@ -58,6 +63,51 @@ function AdminLayout() {
                 <Button asChild variant="ghost" size="sm">
                   <Link to="/admin/messages" activeProps={{ className: "bg-accent" }}>
                     Messages
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/academics" activeProps={{ className: "bg-accent" }}>
+                    Academics
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/attendance" activeProps={{ className: "bg-accent" }}>
+                    Attendance
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/staff" activeProps={{ className: "bg-accent" }}>
+                    People
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/inventory" activeProps={{ className: "bg-accent" }}>
+                    Inventory
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/procurement" activeProps={{ className: "bg-accent" }}>
+                    Procurement
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/security/visitors" activeProps={{ className: "bg-accent" }}>
+                    Visitors
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/communication" activeProps={{ className: "bg-accent" }}>
+                    Communication
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/reports" activeProps={{ className: "bg-accent" }}>
+                    Reports
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/ai" activeProps={{ className: "bg-accent" }}>
+                    Intelligence
                   </Link>
                 </Button>
                 <Button asChild variant="ghost" size="sm">

@@ -25,8 +25,22 @@ import { Route as PublicHelpRouteImport } from './routes/_public.help'
 import { Route as PublicNewsRouteImport } from './routes/_public.news'
 import { Route as PublicStaffRouteImport } from './routes/_public.staff'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAcademicsRouteImport } from './routes/admin.academics'
+import { Route as AdminAiRouteImport } from './routes/admin.ai'
+import { Route as AdminAttendanceRouteImport } from './routes/admin.attendance'
+import { Route as AdminCalendarRouteImport } from './routes/admin.calendar'
+import { Route as AdminCertificatesRouteImport } from './routes/admin.certificates'
+import { Route as AdminCommunicationRouteImport } from './routes/admin.communication'
+import { Route as AdminDisciplineRouteImport } from './routes/admin.discipline'
+import { Route as AdminDocumentsRouteImport } from './routes/admin.documents'
 import { Route as AdminFinanceRouteImport } from './routes/admin.finance'
+import { Route as AdminGovernanceRouteImport } from './routes/admin.governance'
+import { Route as AdminInventoryRouteImport } from './routes/admin.inventory'
 import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
+import { Route as AdminProcurementRouteImport } from './routes/admin.procurement'
+import { Route as AdminReportsRouteImport } from './routes/admin.reports'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminStaffRouteImport } from './routes/admin.staff'
 import { Route as AdminStudentsRouteImport } from './routes/admin.students'
 import { Route as ApplyIndexRouteImport } from './routes/apply.index'
 import { Route as PublicEventsSlugRouteImport } from './routes/_public.events.$slug'
@@ -35,6 +49,8 @@ import { Route as PublicNewsSlugRouteImport } from './routes/_public.news.$slug'
 import { Route as AdminAdmissionsIndexRouteImport } from './routes/admin.admissions.index'
 import { Route as AdminAdmissionsIdRouteImport } from './routes/admin.admissions.$id'
 import { Route as AdminAdmissionsSettingsRouteImport } from './routes/admin.admissions.settings'
+import { Route as AdminFinancePaymentsRouteImport } from './routes/admin.finance.payments'
+import { Route as AdminSecurityVisitorsRouteImport } from './routes/admin.security.visitors'
 import { Route as ApplyApplicationIdRouteImport } from './routes/apply.application.$id'
 import { Route as ApplyStatusIdRouteImport } from './routes/apply.status.$id'
 
@@ -117,14 +133,84 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAcademicsRoute = AdminAcademicsRouteImport.update({
+  id: '/academics',
+  path: '/academics',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAiRoute = AdminAiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAttendanceRoute = AdminAttendanceRouteImport.update({
+  id: '/attendance',
+  path: '/attendance',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCalendarRoute = AdminCalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCertificatesRoute = AdminCertificatesRouteImport.update({
+  id: '/certificates',
+  path: '/certificates',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCommunicationRoute = AdminCommunicationRouteImport.update({
+  id: '/communication',
+  path: '/communication',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDisciplineRoute = AdminDisciplineRouteImport.update({
+  id: '/discipline',
+  path: '/discipline',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDocumentsRoute = AdminDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminFinanceRoute = AdminFinanceRouteImport.update({
   id: '/finance',
   path: '/finance',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminGovernanceRoute = AdminGovernanceRouteImport.update({
+  id: '/governance',
+  path: '/governance',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminInventoryRoute = AdminInventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminMessagesRoute = AdminMessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProcurementRoute = AdminProcurementRouteImport.update({
+  id: '/procurement',
+  path: '/procurement',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminStaffRoute = AdminStaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminStudentsRoute = AdminStudentsRouteImport.update({
@@ -167,6 +253,16 @@ const AdminAdmissionsSettingsRoute = AdminAdmissionsSettingsRouteImport.update({
   path: '/admissions/settings',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminFinancePaymentsRoute = AdminFinancePaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => AdminFinanceRoute,
+} as any)
+const AdminSecurityVisitorsRoute = AdminSecurityVisitorsRouteImport.update({
+  id: '/security/visitors',
+  path: '/security/visitors',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ApplyApplicationIdRoute = ApplyApplicationIdRouteImport.update({
   id: '/application/$id',
   path: '/application/$id',
@@ -193,8 +289,22 @@ export interface FileRoutesByFullPath {
   '/help': typeof PublicHelpRoute
   '/news': typeof PublicNewsRouteWithChildren
   '/staff': typeof PublicStaffRoute
-  '/admin/finance': typeof AdminFinanceRoute
+  '/admin/academics': typeof AdminAcademicsRoute
+  '/admin/ai': typeof AdminAiRoute
+  '/admin/attendance': typeof AdminAttendanceRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
+  '/admin/communication': typeof AdminCommunicationRoute
+  '/admin/discipline': typeof AdminDisciplineRoute
+  '/admin/documents': typeof AdminDocumentsRoute
+  '/admin/finance': typeof AdminFinanceRouteWithChildren
+  '/admin/governance': typeof AdminGovernanceRoute
+  '/admin/inventory': typeof AdminInventoryRoute
   '/admin/messages': typeof AdminMessagesRoute
+  '/admin/procurement': typeof AdminProcurementRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/staff': typeof AdminStaffRoute
   '/admin/students': typeof AdminStudentsRoute
   '/admin/': typeof AdminIndexRoute
   '/apply/': typeof ApplyIndexRoute
@@ -203,6 +313,8 @@ export interface FileRoutesByFullPath {
   '/news/$slug': typeof PublicNewsSlugRoute
   '/admin/admissions/$id': typeof AdminAdmissionsIdRoute
   '/admin/admissions/settings': typeof AdminAdmissionsSettingsRoute
+  '/admin/finance/payments': typeof AdminFinancePaymentsRoute
+  '/admin/security/visitors': typeof AdminSecurityVisitorsRoute
   '/apply/application/$id': typeof ApplyApplicationIdRoute
   '/apply/status/$id': typeof ApplyStatusIdRoute
   '/admin/admissions/': typeof AdminAdmissionsIndexRoute
@@ -219,8 +331,22 @@ export interface FileRoutesByTo {
   '/help': typeof PublicHelpRoute
   '/news': typeof PublicNewsRouteWithChildren
   '/staff': typeof PublicStaffRoute
-  '/admin/finance': typeof AdminFinanceRoute
+  '/admin/academics': typeof AdminAcademicsRoute
+  '/admin/ai': typeof AdminAiRoute
+  '/admin/attendance': typeof AdminAttendanceRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
+  '/admin/communication': typeof AdminCommunicationRoute
+  '/admin/discipline': typeof AdminDisciplineRoute
+  '/admin/documents': typeof AdminDocumentsRoute
+  '/admin/finance': typeof AdminFinanceRouteWithChildren
+  '/admin/governance': typeof AdminGovernanceRoute
+  '/admin/inventory': typeof AdminInventoryRoute
   '/admin/messages': typeof AdminMessagesRoute
+  '/admin/procurement': typeof AdminProcurementRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/staff': typeof AdminStaffRoute
   '/admin/students': typeof AdminStudentsRoute
   '/': typeof PublicIndexRoute
   '/admin': typeof AdminIndexRoute
@@ -230,6 +356,8 @@ export interface FileRoutesByTo {
   '/news/$slug': typeof PublicNewsSlugRoute
   '/admin/admissions/$id': typeof AdminAdmissionsIdRoute
   '/admin/admissions/settings': typeof AdminAdmissionsSettingsRoute
+  '/admin/finance/payments': typeof AdminFinancePaymentsRoute
+  '/admin/security/visitors': typeof AdminSecurityVisitorsRoute
   '/apply/application/$id': typeof ApplyApplicationIdRoute
   '/apply/status/$id': typeof ApplyStatusIdRoute
   '/admin/admissions': typeof AdminAdmissionsIndexRoute
@@ -250,8 +378,22 @@ export interface FileRoutesById {
   '/_public/help': typeof PublicHelpRoute
   '/_public/news': typeof PublicNewsRouteWithChildren
   '/_public/staff': typeof PublicStaffRoute
-  '/admin/finance': typeof AdminFinanceRoute
+  '/admin/academics': typeof AdminAcademicsRoute
+  '/admin/ai': typeof AdminAiRoute
+  '/admin/attendance': typeof AdminAttendanceRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/certificates': typeof AdminCertificatesRoute
+  '/admin/communication': typeof AdminCommunicationRoute
+  '/admin/discipline': typeof AdminDisciplineRoute
+  '/admin/documents': typeof AdminDocumentsRoute
+  '/admin/finance': typeof AdminFinanceRouteWithChildren
+  '/admin/governance': typeof AdminGovernanceRoute
+  '/admin/inventory': typeof AdminInventoryRoute
   '/admin/messages': typeof AdminMessagesRoute
+  '/admin/procurement': typeof AdminProcurementRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/staff': typeof AdminStaffRoute
   '/admin/students': typeof AdminStudentsRoute
   '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
@@ -261,6 +403,8 @@ export interface FileRoutesById {
   '/_public/news/$slug': typeof PublicNewsSlugRoute
   '/admin/admissions/$id': typeof AdminAdmissionsIdRoute
   '/admin/admissions/settings': typeof AdminAdmissionsSettingsRoute
+  '/admin/finance/payments': typeof AdminFinancePaymentsRoute
+  '/admin/security/visitors': typeof AdminSecurityVisitorsRoute
   '/apply/application/$id': typeof ApplyApplicationIdRoute
   '/apply/status/$id': typeof ApplyStatusIdRoute
   '/admin/admissions/': typeof AdminAdmissionsIndexRoute
@@ -282,8 +426,22 @@ export interface FileRouteTypes {
     | '/help'
     | '/news'
     | '/staff'
+    | '/admin/academics'
+    | '/admin/ai'
+    | '/admin/attendance'
+    | '/admin/calendar'
+    | '/admin/certificates'
+    | '/admin/communication'
+    | '/admin/discipline'
+    | '/admin/documents'
     | '/admin/finance'
+    | '/admin/governance'
+    | '/admin/inventory'
     | '/admin/messages'
+    | '/admin/procurement'
+    | '/admin/reports'
+    | '/admin/settings'
+    | '/admin/staff'
     | '/admin/students'
     | '/admin/'
     | '/apply/'
@@ -292,6 +450,8 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/admin/admissions/$id'
     | '/admin/admissions/settings'
+    | '/admin/finance/payments'
+    | '/admin/security/visitors'
     | '/apply/application/$id'
     | '/apply/status/$id'
     | '/admin/admissions/'
@@ -308,8 +468,22 @@ export interface FileRouteTypes {
     | '/help'
     | '/news'
     | '/staff'
+    | '/admin/academics'
+    | '/admin/ai'
+    | '/admin/attendance'
+    | '/admin/calendar'
+    | '/admin/certificates'
+    | '/admin/communication'
+    | '/admin/discipline'
+    | '/admin/documents'
     | '/admin/finance'
+    | '/admin/governance'
+    | '/admin/inventory'
     | '/admin/messages'
+    | '/admin/procurement'
+    | '/admin/reports'
+    | '/admin/settings'
+    | '/admin/staff'
     | '/admin/students'
     | '/'
     | '/admin'
@@ -319,6 +493,8 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/admin/admissions/$id'
     | '/admin/admissions/settings'
+    | '/admin/finance/payments'
+    | '/admin/security/visitors'
     | '/apply/application/$id'
     | '/apply/status/$id'
     | '/admin/admissions'
@@ -338,8 +514,22 @@ export interface FileRouteTypes {
     | '/_public/help'
     | '/_public/news'
     | '/_public/staff'
+    | '/admin/academics'
+    | '/admin/ai'
+    | '/admin/attendance'
+    | '/admin/calendar'
+    | '/admin/certificates'
+    | '/admin/communication'
+    | '/admin/discipline'
+    | '/admin/documents'
     | '/admin/finance'
+    | '/admin/governance'
+    | '/admin/inventory'
     | '/admin/messages'
+    | '/admin/procurement'
+    | '/admin/reports'
+    | '/admin/settings'
+    | '/admin/staff'
     | '/admin/students'
     | '/_public/'
     | '/admin/'
@@ -349,6 +539,8 @@ export interface FileRouteTypes {
     | '/_public/news/$slug'
     | '/admin/admissions/$id'
     | '/admin/admissions/settings'
+    | '/admin/finance/payments'
+    | '/admin/security/visitors'
     | '/apply/application/$id'
     | '/apply/status/$id'
     | '/admin/admissions/'
@@ -476,6 +668,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/academics': {
+      id: '/admin/academics'
+      path: '/academics'
+      fullPath: '/admin/academics'
+      preLoaderRoute: typeof AdminAcademicsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/ai': {
+      id: '/admin/ai'
+      path: '/ai'
+      fullPath: '/admin/ai'
+      preLoaderRoute: typeof AdminAiRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/attendance': {
+      id: '/admin/attendance'
+      path: '/attendance'
+      fullPath: '/admin/attendance'
+      preLoaderRoute: typeof AdminAttendanceRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/calendar': {
+      id: '/admin/calendar'
+      path: '/calendar'
+      fullPath: '/admin/calendar'
+      preLoaderRoute: typeof AdminCalendarRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/certificates': {
+      id: '/admin/certificates'
+      path: '/certificates'
+      fullPath: '/admin/certificates'
+      preLoaderRoute: typeof AdminCertificatesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/communication': {
+      id: '/admin/communication'
+      path: '/communication'
+      fullPath: '/admin/communication'
+      preLoaderRoute: typeof AdminCommunicationRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/discipline': {
+      id: '/admin/discipline'
+      path: '/discipline'
+      fullPath: '/admin/discipline'
+      preLoaderRoute: typeof AdminDisciplineRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/documents': {
+      id: '/admin/documents'
+      path: '/documents'
+      fullPath: '/admin/documents'
+      preLoaderRoute: typeof AdminDocumentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/finance': {
       id: '/admin/finance'
       path: '/finance'
@@ -483,11 +731,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminFinanceRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/governance': {
+      id: '/admin/governance'
+      path: '/governance'
+      fullPath: '/admin/governance'
+      preLoaderRoute: typeof AdminGovernanceRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/inventory': {
+      id: '/admin/inventory'
+      path: '/inventory'
+      fullPath: '/admin/inventory'
+      preLoaderRoute: typeof AdminInventoryRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/messages': {
       id: '/admin/messages'
       path: '/messages'
       fullPath: '/admin/messages'
       preLoaderRoute: typeof AdminMessagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/procurement': {
+      id: '/admin/procurement'
+      path: '/procurement'
+      fullPath: '/admin/procurement'
+      preLoaderRoute: typeof AdminProcurementRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/staff': {
+      id: '/admin/staff'
+      path: '/staff'
+      fullPath: '/admin/staff'
+      preLoaderRoute: typeof AdminStaffRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/students': {
@@ -544,6 +834,20 @@ declare module '@tanstack/react-router' {
       path: '/admissions/settings'
       fullPath: '/admin/admissions/settings'
       preLoaderRoute: typeof AdminAdmissionsSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/finance/payments': {
+      id: '/admin/finance/payments'
+      path: '/payments'
+      fullPath: '/admin/finance/payments'
+      preLoaderRoute: typeof AdminFinancePaymentsRouteImport
+      parentRoute: typeof AdminFinanceRoute
+    }
+    '/admin/security/visitors': {
+      id: '/admin/security/visitors'
+      path: '/security/visitors'
+      fullPath: '/admin/security/visitors'
+      preLoaderRoute: typeof AdminSecurityVisitorsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/apply/application/$id': {
@@ -628,23 +932,65 @@ const PublicRouteChildren: PublicRouteChildren = {
 const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren)
 
+interface AdminFinanceRouteChildren {
+  AdminFinancePaymentsRoute: typeof AdminFinancePaymentsRoute
+}
+
+const AdminFinanceRouteChildren: AdminFinanceRouteChildren = {
+  AdminFinancePaymentsRoute: AdminFinancePaymentsRoute,
+}
+
+const AdminFinanceRouteWithChildren = AdminFinanceRoute._addFileChildren(
+  AdminFinanceRouteChildren,
+)
+
 interface AdminRouteChildren {
-  AdminFinanceRoute: typeof AdminFinanceRoute
+  AdminAcademicsRoute: typeof AdminAcademicsRoute
+  AdminAiRoute: typeof AdminAiRoute
+  AdminAttendanceRoute: typeof AdminAttendanceRoute
+  AdminCalendarRoute: typeof AdminCalendarRoute
+  AdminCertificatesRoute: typeof AdminCertificatesRoute
+  AdminCommunicationRoute: typeof AdminCommunicationRoute
+  AdminDisciplineRoute: typeof AdminDisciplineRoute
+  AdminDocumentsRoute: typeof AdminDocumentsRoute
+  AdminFinanceRoute: typeof AdminFinanceRouteWithChildren
+  AdminGovernanceRoute: typeof AdminGovernanceRoute
+  AdminInventoryRoute: typeof AdminInventoryRoute
   AdminMessagesRoute: typeof AdminMessagesRoute
+  AdminProcurementRoute: typeof AdminProcurementRoute
+  AdminReportsRoute: typeof AdminReportsRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminStaffRoute: typeof AdminStaffRoute
   AdminStudentsRoute: typeof AdminStudentsRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminAdmissionsIdRoute: typeof AdminAdmissionsIdRoute
   AdminAdmissionsSettingsRoute: typeof AdminAdmissionsSettingsRoute
+  AdminSecurityVisitorsRoute: typeof AdminSecurityVisitorsRoute
   AdminAdmissionsIndexRoute: typeof AdminAdmissionsIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
-  AdminFinanceRoute: AdminFinanceRoute,
+  AdminAcademicsRoute: AdminAcademicsRoute,
+  AdminAiRoute: AdminAiRoute,
+  AdminAttendanceRoute: AdminAttendanceRoute,
+  AdminCalendarRoute: AdminCalendarRoute,
+  AdminCertificatesRoute: AdminCertificatesRoute,
+  AdminCommunicationRoute: AdminCommunicationRoute,
+  AdminDisciplineRoute: AdminDisciplineRoute,
+  AdminDocumentsRoute: AdminDocumentsRoute,
+  AdminFinanceRoute: AdminFinanceRouteWithChildren,
+  AdminGovernanceRoute: AdminGovernanceRoute,
+  AdminInventoryRoute: AdminInventoryRoute,
   AdminMessagesRoute: AdminMessagesRoute,
+  AdminProcurementRoute: AdminProcurementRoute,
+  AdminReportsRoute: AdminReportsRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminStaffRoute: AdminStaffRoute,
   AdminStudentsRoute: AdminStudentsRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminAdmissionsIdRoute: AdminAdmissionsIdRoute,
   AdminAdmissionsSettingsRoute: AdminAdmissionsSettingsRoute,
+  AdminSecurityVisitorsRoute: AdminSecurityVisitorsRoute,
   AdminAdmissionsIndexRoute: AdminAdmissionsIndexRoute,
 }
 
