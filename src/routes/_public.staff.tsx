@@ -7,12 +7,12 @@ import { ImageHero } from "@/components/site/blocks";
 import staffHero from "@/assets/staff-group.jpg";
 
 const title = "Staff & Faculty";
-const description = "Meet the leadership team, teachers and support staff of Sample1 School.";
+const description = "Meet the leadership team, teachers and support staff of Cresta Reign Academy.";
 
 export const Route = createFileRoute("/_public/staff")({
   head: () => ({
     meta: [
-      { title: `${title} - Sample1 School` },
+      { title: `${title} - Cresta Reign Academy` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
@@ -26,7 +26,7 @@ function StaffPage() {
 
   return (
     <>
-      <ImageHero image={staffHero} imageAlt="Sample1 School teaching staff group photograph" eyebrow="Our people" title={title} description={description} />
+      <ImageHero image={staffHero} imageAlt="Cresta Reign Academy teaching staff group photograph" eyebrow="Our people" title={title} description={description} />
       <Section>
         {staff.isPending ? (
           <CardSkeletonGrid count={6} />

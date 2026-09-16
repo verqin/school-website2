@@ -8,10 +8,10 @@ import { albumWithImagesQuery } from "@/lib/content";
 export const Route = createFileRoute("/_public/gallery/$slug")({
   head: () => ({
     meta: [
-      { title: "Album - Sample1 School" },
-      { name: "description", content: "Photographs from school life at Sample1 School." },
-      { property: "og:title", content: "Album - Sample1 School" },
-      { property: "og:description", content: "Photographs from school life at Sample1 School." },
+      { title: "Album - Cresta Reign Academy" },
+      { name: "description", content: "Photographs from school life at Cresta Reign Academy." },
+      { property: "og:title", content: "Album - Cresta Reign Academy" },
+      { property: "og:description", content: "Photographs from school life at Cresta Reign Academy." },
     ],
   }),
   component: AlbumPage,

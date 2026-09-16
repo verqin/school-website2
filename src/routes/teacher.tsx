@@ -51,7 +51,7 @@ function TeacherDashboard() {
         </Button>
       </div>
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Metric label="Assigned classes" value="4" icon={Users} detail="Forms 2A–4B" />
+        <Metric label="Assigned classes" value="4" icon={Users} detail="Forms 2A-4B" />
         <Metric label="Attendance pending" value="2" icon={CalendarCheck} detail="Today" />
         <Metric
           label="Marks to enter"

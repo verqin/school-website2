@@ -9,10 +9,10 @@ import { eventQuery, formatDateTime } from "@/lib/content";
 export const Route = createFileRoute("/_public/events/$slug")({
   head: () => ({
     meta: [
-      { title: "Event - Sample1 School" },
-      { name: "description", content: "Details for an upcoming Sample1 School event." },
-      { property: "og:title", content: "Event - Sample1 School" },
-      { property: "og:description", content: "Details for an upcoming Sample1 School event." },
+      { title: "Event - Cresta Reign Academy" },
+      { name: "description", content: "Details for an upcoming Cresta Reign Academy event." },
+      { property: "og:title", content: "Event - Cresta Reign Academy" },
+      { property: "og:description", content: "Details for an upcoming Cresta Reign Academy event." },
     ],
   }),
   component: EventDetailPage,

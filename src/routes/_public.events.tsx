@@ -7,12 +7,12 @@ import { ImageHero } from "@/components/site/blocks";
 import eventsHero from "@/assets/events-hero.jpg";
 
 const title = "Events & Calendar";
-const description = "Upcoming concerts, sports fixtures, parent evenings and celebrations at Sample1 School.";
+const description = "Upcoming concerts, sports fixtures, parent evenings and celebrations at Cresta Reign Academy.";
 
 export const Route = createFileRoute("/_public/events")({
   head: () => ({
     meta: [
-      { title: `${title} - Sample1 School` },
+      { title: `${title} - Cresta Reign Academy` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
@@ -26,7 +26,7 @@ function EventsPage() {
 
   return (
     <>
-      <ImageHero image={eventsHero} imageAlt="Sample1 School assembly hall during a school event" eyebrow="Calendar" title={title} description={description} />
+      <ImageHero image={eventsHero} imageAlt="Cresta Reign Academy assembly hall during a school event" eyebrow="Calendar" title={title} description={description} />
       <Section>
         {events.isPending ? (
           <CardSkeletonGrid count={4} />

@@ -8,14 +8,14 @@ import { pageQuery } from "@/lib/content";
 import { ImageHero } from "@/components/site/blocks";
 import aboutHero from "@/assets/about-hero.jpg";
 
-const title = "About Sample1 School";
+const title = "About Cresta Reign Academy";
 const description =
-  "Our story, mission, values and leadership - managed by school staff through the Sample1 content admin.";
+  "Our story, mission, values and leadership - managed by school staff through the Cresta Reign content admin.";
 
 export const Route = createFileRoute("/_public/about")({
   head: () => ({
     meta: [
-      { title: `${title} - Sample1 School` },
+      { title: `${title} - Cresta Reign Academy` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
@@ -35,7 +35,7 @@ function AboutPage() {
 
   return (
     <>
-      <ImageHero image={aboutHero} imageAlt="Sample1 School courtyard with students at assembly" eyebrow="About us" title={page.data?.title ?? title} description={page.data?.subtitle ?? description} />
+      <ImageHero image={aboutHero} imageAlt="Cresta Reign Academy courtyard with students at assembly" eyebrow="About us" title={page.data?.title ?? title} description={page.data?.subtitle ?? description} />
 
       <Section labelledBy="story-heading">
         <div className="grid items-start gap-10 lg:grid-cols-[1.2fr_1fr]">
@@ -59,7 +59,7 @@ function AboutPage() {
               </PlaceholderNote>
             )}
           </div>
-          <MediaFrame src={page.data?.hero_image_url} alt="Sample1 School campus" />
+          <MediaFrame src={page.data?.hero_image_url} alt="Cresta Reign Academy campus" />
         </div>
       </Section>
 

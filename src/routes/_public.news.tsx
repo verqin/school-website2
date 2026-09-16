@@ -7,12 +7,12 @@ import { ImageHero } from "@/components/site/blocks";
 import newsHero from "@/assets/news-hero.jpg";
 
 const title = "School News";
-const description = "Announcements, achievements and stories from across the Sample1 School community.";
+const description = "Announcements, achievements and stories from across the Cresta Reign Academy community.";
 
 export const Route = createFileRoute("/_public/news")({
   head: () => ({
     meta: [
-      { title: `${title} - Sample1 School` },
+      { title: `${title} - Cresta Reign Academy` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
@@ -26,7 +26,7 @@ function NewsPage() {
 
   return (
     <>
-      <ImageHero image={newsHero} imageAlt="Sample1 School students in a corridor by the noticeboards" eyebrow="Newsroom" title={title} description={description} />
+      <ImageHero image={newsHero} imageAlt="Cresta Reign Academy students in a corridor by the noticeboards" eyebrow="Newsroom" title={title} description={description} />
       <Section>
         {news.isPending ? (
           <CardSkeletonGrid count={6} />

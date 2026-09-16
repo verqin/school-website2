@@ -1,5 +1,5 @@
 /**
- * Centralised authorization for the Sample1 platform.
+ * Centralised authorization for the Cresta Reign Academy platform.
  *
  * The database is the real boundary: every table has RLS policies built on
  * public.can('permission'). This module mirrors the same permission map on the

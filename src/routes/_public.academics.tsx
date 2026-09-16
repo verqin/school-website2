@@ -10,12 +10,12 @@ import academicsHero from "@/assets/science-lab.jpg";
 
 const title = "Academics & Programmes";
 const description =
-  "Explore the academic programmes offered at Sample1 School, from early years through to senior school.";
+  "Explore the academic programmes offered at Cresta Reign Academy, from early years through to senior school.";
 
 export const Route = createFileRoute("/_public/academics")({
   head: () => ({
     meta: [
-      { title: `${title} - Sample1 School` },
+      { title: `${title} - Cresta Reign Academy` },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
@@ -30,10 +30,10 @@ function AcademicsPage() {
 
   return (
     <>
-      <ImageHero image={academicsHero} imageAlt="Students working in a Sample1 School science laboratory" eyebrow="Academics" title={page.data?.title ?? title} description={page.data?.subtitle ?? description} />
+      <ImageHero image={academicsHero} imageAlt="Students working in a Cresta Reign Academy science laboratory" eyebrow="Academics" title={page.data?.title ?? title} description={page.data?.subtitle ?? description} />
 
       <Section labelledBy="approach-heading">
-        <SectionHeading id="approach-heading" eyebrow="Our approach" title="Teaching and learning at Sample1" />
+        <SectionHeading id="approach-heading" eyebrow="Our approach" title="Teaching and learning at Cresta Reign" />
         {page.data?.body ? (
           <Prose text={page.data.body} className="max-w-3xl" />
         ) : (

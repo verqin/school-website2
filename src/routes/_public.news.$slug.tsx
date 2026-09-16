@@ -9,10 +9,10 @@ import { formatDate, newsPostQuery } from "@/lib/content";
 export const Route = createFileRoute("/_public/news/$slug")({
   head: ({ params }) => ({
     meta: [
-      { title: `News - Sample1 School` },
-      { name: "description", content: `Read the latest from Sample1 School: ${params.slug.replace(/-/g, " ")}.` },
-      { property: "og:title", content: "News - Sample1 School" },
-      { property: "og:description", content: "A story from the Sample1 School community." },
+      { title: `News - Cresta Reign Academy` },
+      { name: "description", content: `Read the latest from Cresta Reign Academy: ${params.slug.replace(/-/g, " ")}.` },
+      { property: "og:title", content: "News - Cresta Reign Academy" },
+      { property: "og:description", content: "A story from the Cresta Reign Academy community." },
     ],
   }),
   component: NewsDetailPage,
