@@ -61,6 +61,51 @@ function AdminLayout() {
                   </Link>
                 </Button>
                 <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/academics" activeProps={{ className: "bg-accent" }}>
+                    Academics
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/attendance" activeProps={{ className: "bg-accent" }}>
+                    Attendance
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/staff" activeProps={{ className: "bg-accent" }}>
+                    People
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/inventory" activeProps={{ className: "bg-accent" }}>
+                    Inventory
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/procurement" activeProps={{ className: "bg-accent" }}>
+                    Procurement
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/security/visitors" activeProps={{ className: "bg-accent" }}>
+                    Visitors
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/communication" activeProps={{ className: "bg-accent" }}>
+                    Communication
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/reports" activeProps={{ className: "bg-accent" }}>
+                    Reports
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/ai" activeProps={{ className: "bg-accent" }}>
+                    Intelligence
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
                   <Link to="/admin/admissions/settings" activeProps={{ className: "bg-accent" }}>
                     Admissions setup
                   </Link>
