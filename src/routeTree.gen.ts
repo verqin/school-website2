@@ -21,6 +21,7 @@ import { Route as PublicAdmissionsRouteImport } from './routes/_public.admission
 import { Route as PublicContactRouteImport } from './routes/_public.contact'
 import { Route as PublicEventsRouteImport } from './routes/_public.events'
 import { Route as PublicGalleryRouteImport } from './routes/_public.gallery'
+import { Route as PublicHelpRouteImport } from './routes/_public.help'
 import { Route as PublicNewsRouteImport } from './routes/_public.news'
 import { Route as PublicStaffRouteImport } from './routes/_public.staff'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
@@ -94,6 +95,11 @@ const PublicEventsRoute = PublicEventsRouteImport.update({
 const PublicGalleryRoute = PublicGalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicHelpRoute = PublicHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicNewsRoute = PublicNewsRouteImport.update({
@@ -184,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof PublicContactRoute
   '/events': typeof PublicEventsRouteWithChildren
   '/gallery': typeof PublicGalleryRouteWithChildren
+  '/help': typeof PublicHelpRoute
   '/news': typeof PublicNewsRouteWithChildren
   '/staff': typeof PublicStaffRoute
   '/admin/finance': typeof AdminFinanceRoute
@@ -209,6 +216,7 @@ export interface FileRoutesByTo {
   '/contact': typeof PublicContactRoute
   '/events': typeof PublicEventsRouteWithChildren
   '/gallery': typeof PublicGalleryRouteWithChildren
+  '/help': typeof PublicHelpRoute
   '/news': typeof PublicNewsRouteWithChildren
   '/staff': typeof PublicStaffRoute
   '/admin/finance': typeof AdminFinanceRoute
@@ -239,6 +247,7 @@ export interface FileRoutesById {
   '/_public/contact': typeof PublicContactRoute
   '/_public/events': typeof PublicEventsRouteWithChildren
   '/_public/gallery': typeof PublicGalleryRouteWithChildren
+  '/_public/help': typeof PublicHelpRoute
   '/_public/news': typeof PublicNewsRouteWithChildren
   '/_public/staff': typeof PublicStaffRoute
   '/admin/finance': typeof AdminFinanceRoute
@@ -270,6 +279,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/gallery'
+    | '/help'
     | '/news'
     | '/staff'
     | '/admin/finance'
@@ -295,6 +305,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/gallery'
+    | '/help'
     | '/news'
     | '/staff'
     | '/admin/finance'
@@ -324,6 +335,7 @@ export interface FileRouteTypes {
     | '/_public/contact'
     | '/_public/events'
     | '/_public/gallery'
+    | '/_public/help'
     | '/_public/news'
     | '/_public/staff'
     | '/admin/finance'
@@ -434,6 +446,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof PublicGalleryRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/help': {
+      id: '/_public/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof PublicHelpRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_public/news': {
@@ -587,6 +606,7 @@ interface PublicRouteChildren {
   PublicContactRoute: typeof PublicContactRoute
   PublicEventsRoute: typeof PublicEventsRouteWithChildren
   PublicGalleryRoute: typeof PublicGalleryRouteWithChildren
+  PublicHelpRoute: typeof PublicHelpRoute
   PublicNewsRoute: typeof PublicNewsRouteWithChildren
   PublicStaffRoute: typeof PublicStaffRoute
   PublicIndexRoute: typeof PublicIndexRoute
@@ -599,6 +619,7 @@ const PublicRouteChildren: PublicRouteChildren = {
   PublicContactRoute: PublicContactRoute,
   PublicEventsRoute: PublicEventsRouteWithChildren,
   PublicGalleryRoute: PublicGalleryRouteWithChildren,
+  PublicHelpRoute: PublicHelpRoute,
   PublicNewsRoute: PublicNewsRouteWithChildren,
   PublicStaffRoute: PublicStaffRoute,
   PublicIndexRoute: PublicIndexRoute,

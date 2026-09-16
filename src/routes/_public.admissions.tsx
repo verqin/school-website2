@@ -221,6 +221,45 @@ function AdmissionsPage() {
           </Button>
         </div>
       </Section>
+
+      <Section labelledBy="coming-soon-heading">
+        <SectionHeading
+          id="coming-soon-heading"
+          eyebrow="Coming soon"
+          title="More ways to prepare for Cresta Reign"
+          description="Our next admissions releases are being shaped around families, learners and the school office."
+        />
+        <div className="grid gap-4 md:grid-cols-3">
+          {[
+            { title: "Admissions open-day calendar", body: "Book a guided visit, meet the academic team and ask questions about Grade 1–6, Form 1–6 and vocational pathways." },
+            { title: "Programme discovery guide", body: "Compare Zimsec, Cambridge and SLP routes alongside Nurse Aide, Beauty, Hairdressing, Waitering, Housekeeping, Tour Guide and IELTS preparation." },
+            { title: "Family readiness checklist", body: "A simple step-by-step guide for preparing learner details, academic history, contact information and post-acceptance documents." },
+          ].map((item) => (
+            <Card key={item.title} className="h-full border-primary/10 bg-card/80 shadow-sm">
+              <CardHeader>
+                <Badge className="w-fit" variant="outline">In preparation</Badge>
+                <CardTitle className="mt-3 text-lg">{item.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm leading-6 text-muted-foreground">{item.body}</CardContent>
+            </Card>
+          ))}
+        </div>
+        <div className="mt-6 rounded-2xl border border-gold/30 bg-gold/10 p-5 text-sm leading-6 text-purple">
+          Until these tools are published, the admissions office remains available at <strong>+263 779 739 148</strong> or <strong>+263 775 656 322</strong>. Visit Hillside West, Corner 11th Avenue and Jason Moyo (2nd Floor), or Alledeloyd Building Room 10B along J. Tongogara Street.
+        </div>
+      </Section>
+
+      <Section tone="muted" labelledBy="help-heading">
+        <SectionHeading
+          id="help-heading"
+          eyebrow="Need a walkthrough?"
+          title="Read the platform manuals"
+          description="Learn how to apply, track an application, and use each staff dashboard without guessing at credentials."
+        />
+        <Button asChild variant="outline" className="rounded-full">
+          <Link to="/help">Open platform manuals</Link>
+        </Button>
+      </Section>
     </>
   );
 }
