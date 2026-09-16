@@ -27,6 +27,7 @@ import { Route as PublicStaffRouteImport } from './routes/_public.staff'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminAcademicsRouteImport } from './routes/admin.academics'
 import { Route as AdminAiRouteImport } from './routes/admin.ai'
+import { Route as AdminArchitectureRouteImport } from './routes/admin.architecture'
 import { Route as AdminAttendanceRouteImport } from './routes/admin.attendance'
 import { Route as AdminCalendarRouteImport } from './routes/admin.calendar'
 import { Route as AdminCertificatesRouteImport } from './routes/admin.certificates'
@@ -141,6 +142,11 @@ const AdminAcademicsRoute = AdminAcademicsRouteImport.update({
 const AdminAiRoute = AdminAiRouteImport.update({
   id: '/ai',
   path: '/ai',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminArchitectureRoute = AdminArchitectureRouteImport.update({
+  id: '/architecture',
+  path: '/architecture',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminAttendanceRoute = AdminAttendanceRouteImport.update({
@@ -291,6 +297,7 @@ export interface FileRoutesByFullPath {
   '/staff': typeof PublicStaffRoute
   '/admin/academics': typeof AdminAcademicsRoute
   '/admin/ai': typeof AdminAiRoute
+  '/admin/architecture': typeof AdminArchitectureRoute
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/calendar': typeof AdminCalendarRoute
   '/admin/certificates': typeof AdminCertificatesRoute
@@ -333,6 +340,7 @@ export interface FileRoutesByTo {
   '/staff': typeof PublicStaffRoute
   '/admin/academics': typeof AdminAcademicsRoute
   '/admin/ai': typeof AdminAiRoute
+  '/admin/architecture': typeof AdminArchitectureRoute
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/calendar': typeof AdminCalendarRoute
   '/admin/certificates': typeof AdminCertificatesRoute
@@ -380,6 +388,7 @@ export interface FileRoutesById {
   '/_public/staff': typeof PublicStaffRoute
   '/admin/academics': typeof AdminAcademicsRoute
   '/admin/ai': typeof AdminAiRoute
+  '/admin/architecture': typeof AdminArchitectureRoute
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/calendar': typeof AdminCalendarRoute
   '/admin/certificates': typeof AdminCertificatesRoute
@@ -428,6 +437,7 @@ export interface FileRouteTypes {
     | '/staff'
     | '/admin/academics'
     | '/admin/ai'
+    | '/admin/architecture'
     | '/admin/attendance'
     | '/admin/calendar'
     | '/admin/certificates'
@@ -470,6 +480,7 @@ export interface FileRouteTypes {
     | '/staff'
     | '/admin/academics'
     | '/admin/ai'
+    | '/admin/architecture'
     | '/admin/attendance'
     | '/admin/calendar'
     | '/admin/certificates'
@@ -516,6 +527,7 @@ export interface FileRouteTypes {
     | '/_public/staff'
     | '/admin/academics'
     | '/admin/ai'
+    | '/admin/architecture'
     | '/admin/attendance'
     | '/admin/calendar'
     | '/admin/certificates'
@@ -680,6 +692,13 @@ declare module '@tanstack/react-router' {
       path: '/ai'
       fullPath: '/admin/ai'
       preLoaderRoute: typeof AdminAiRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/architecture': {
+      id: '/admin/architecture'
+      path: '/architecture'
+      fullPath: '/admin/architecture'
+      preLoaderRoute: typeof AdminArchitectureRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/attendance': {
@@ -947,6 +966,7 @@ const AdminFinanceRouteWithChildren = AdminFinanceRoute._addFileChildren(
 interface AdminRouteChildren {
   AdminAcademicsRoute: typeof AdminAcademicsRoute
   AdminAiRoute: typeof AdminAiRoute
+  AdminArchitectureRoute: typeof AdminArchitectureRoute
   AdminAttendanceRoute: typeof AdminAttendanceRoute
   AdminCalendarRoute: typeof AdminCalendarRoute
   AdminCertificatesRoute: typeof AdminCertificatesRoute
@@ -972,6 +992,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAcademicsRoute: AdminAcademicsRoute,
   AdminAiRoute: AdminAiRoute,
+  AdminArchitectureRoute: AdminArchitectureRoute,
   AdminAttendanceRoute: AdminAttendanceRoute,
   AdminCalendarRoute: AdminCalendarRoute,
   AdminCertificatesRoute: AdminCertificatesRoute,

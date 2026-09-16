@@ -111,6 +111,11 @@ function AdminLayout() {
                   </Link>
                 </Button>
                 <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/architecture" activeProps={{ className: "bg-accent" }}>
+                    Architecture
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
                   <Link to="/admin/admissions/settings" activeProps={{ className: "bg-accent" }}>
                     Admissions setup
                   </Link>
