@@ -53,7 +53,7 @@ export type PlatformModule = (typeof platformArchitecture.modules)[number];
 
 export function downloadArchitectureBrief() {
   const content = [
-    "CRESTA REIGN ACADEMY — DIGITAL SCHOOL OPERATING SYSTEM",
+    "CRESTA REIGN ACADEMY - DIGITAL SCHOOL OPERATING SYSTEM",
     "Phase 3 architecture brief",
     "",
     `Tenant: ${platformArchitecture.tenant.school}`,

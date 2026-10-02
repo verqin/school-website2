@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-type OperationsPageProps = { title: string; eyebrow: string; description: string; route: string; metrics: { label: string; value: string; detail: string }[]; columns: string[]; rows: string[][]; actions?: string[]; related?: { label: string; to: string }[]; note?: string };
+type OperationsPageProps = { title: string; eyebrow: string; description: string; route?: string; metrics: { label: string; value: string; detail: string }[]; columns: string[]; rows: string[][]; actions?: string[]; related?: { label: string; to: string }[]; note?: string };
 
 export function OperationsPage({ title, eyebrow, description, metrics, columns, rows, actions = ["Add record", "Export"], related = [], note }: OperationsPageProps) {
   return <div className="container-page py-10">
