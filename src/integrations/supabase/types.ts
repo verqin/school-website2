@@ -2253,6 +2253,36 @@ export type Database = {
         }
         Relationships: []
       }
+      operations_records: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          data: Json
+          id: string
+          module: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          data?: Json
+          id?: string
+          module: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          data?: Json
+          id?: string
+          module?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       pages: {
         Row: {
           body: string | null
