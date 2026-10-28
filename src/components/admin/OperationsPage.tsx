@@ -30,7 +30,10 @@ const PAGE_SIZE = 10;
  * Generic staff register. Records are stored in the operations_records table
  * (one "module" per page) and protected by staff-only RLS.
  */
-export function OperationsPage({ title, eyebrow, description, metrics, columns, related = [], note }: OperationsPageProps) {
+const missingRoutes = new Set(["/admin/academics/analytics", "/admin/academics/assessments", "/admin/academics/report-cards", "/admin/attendance/analytics", "/admin/communication/new", "/admin/finance/outstanding", "/admin/staff/teacher-assignments"]);
+
+export function OperationsPage({ title, eyebrow, description, metrics, columns, related: relatedIn = [], note }: OperationsPageProps) {
+  const related = relatedIn.filter((r) => !missingRoutes.has(r.to));
   const module = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   const qc = useQueryClient();
   const [search, setSearch] = useState("");
@@ -96,7 +99,7 @@ export function OperationsPage({ title, eyebrow, description, metrics, columns, 
     const form = new FormData(e.currentTarget);
     const values: Record<string, string> = {};
     for (const c of columns) values[c] = String(form.get(c) ?? "").trim().slice(0, 300);
-    if (!values[columns[0]!]) return toast.error(`${columns[0]} is required`);
+    if (!values[columns[0]!]) { toast.error(`${columns[0]} is required`); return; }
     add.mutate(values);
   }
 

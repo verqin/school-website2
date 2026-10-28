@@ -85,7 +85,7 @@ function StudentInformation() {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const g = (k: string) => String(f.get(k) ?? "").trim().slice(0, 120);
-    if (!g("first_name") || !g("last_name")) return toast.error("First and last name are required");
+    if (!g("first_name") || !g("last_name")) { toast.error("First and last name are required"); return; }
     add.mutate({ first_name: g("first_name"), last_name: g("last_name"), date_of_birth: g("date_of_birth"), gender: g("gender"), grade_level_id: g("grade_level_id"), previous_school: g("previous_school") });
   }
 

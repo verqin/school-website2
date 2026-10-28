@@ -101,7 +101,9 @@ function FinanceWorkspace() {
     mutationFn: async (v: { name: string; amount: number }) => {
       let { data: structure } = await supabase.from("fee_structures").select("id").eq("name", STRUCTURE_NAME).maybeSingle();
       if (!structure) {
-        const r = await supabase.from("fee_structures").insert({ name: STRUCTURE_NAME, currency: "USD", is_active: true }).select("id").single();
+        const { data: year } = await supabase.from("academic_years").select("id").order("start_date", { ascending: false }).limit(1).maybeSingle();
+        if (!year) throw new Error("Create an academic year first");
+        const r = await supabase.from("fee_structures").insert({ name: STRUCTURE_NAME, currency: "USD", is_active: true, academic_year_id: year.id }).select("id").single();
         if (r.error) throw r.error;
         structure = r.data;
       }
@@ -133,7 +135,7 @@ function FinanceWorkspace() {
 
   function printReceipt(p: (typeof list)[number]) {
     const w = window.open("", "_blank", "width=480,height=600");
-    if (!w) return toast.error("Allow pop-ups to print receipts");
+    if (!w) { toast.error("Allow pop-ups to print receipts"); return; }
     const s = p.students as { student_no: string } | null;
     w.document.write(`<html><head><title>Receipt</title></head><body style="font-family:sans-serif;padding:24px"><h2>Cresta Reign Academy</h2><p>Official payment receipt</p><hr/><p><b>Student:</b> ${studentName(p)} (${s?.student_no ?? ""})</p><p><b>Amount:</b> ${money(p.amount_cents)}</p><p><b>Date:</b> ${p.payment_date}</p><p><b>Method:</b> ${p.provider ?? ""}</p><p><b>Reference:</b> ${p.transaction_reference ?? "-"}</p><p><b>Receipt ID:</b> ${p.id.slice(0, 8).toUpperCase()}</p></body></html>`);
     w.document.close();
@@ -229,8 +231,8 @@ function FinanceWorkspace() {
             const f = new FormData(e.currentTarget);
             const amount = Number(f.get("amount"));
             const student_id = String(f.get("student_id") ?? "");
-            if (!student_id) return toast.error("Choose a student");
-            if (!(amount > 0) || amount > 100000) return toast.error("Enter a valid amount");
+            if (!student_id) { toast.error("Choose a student"); return; }
+            if (!(amount > 0) || amount > 100000) { toast.error("Enter a valid amount"); return; }
             recordPayment.mutate({ student_id, amount, date: String(f.get("date") || today), method: String(f.get("method") ?? ""), reference: String(f.get("reference") ?? "").trim().slice(0, 100) });
           }}>
             <div className="grid gap-1.5"><Label htmlFor="student_id">Student *</Label>
@@ -261,7 +263,7 @@ function FinanceWorkspace() {
             const f = new FormData(e.currentTarget);
             const name = String(f.get("name") ?? "").trim().slice(0, 80);
             const amount = Number(f.get("amount"));
-            if (!name || !(amount > 0)) return toast.error("Enter a name and amount");
+            if (!name || !(amount > 0)) { toast.error("Enter a name and amount"); return; }
             addFee.mutate({ name, amount });
           }}>
             <div className="grid gap-1.5"><Label htmlFor="fname">Fee name *</Label><Input id="fname" name="name" placeholder="Tuition" maxLength={80} /></div>
