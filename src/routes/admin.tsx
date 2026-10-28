@@ -1,4 +1,5 @@
-import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import { Search, ShieldCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { AuthGate } from "@/components/admissions/AuthGate";
@@ -11,7 +12,20 @@ export const Route = createFileRoute("/admin")({
   component: AdminLayout,
 });
 
+const sections: [string, string][] = [
+  ["Content", "/admin"], ["Admissions", "/admin/admissions"], ["Students", "/admin/students"],
+  ["Finance", "/admin/finance"], ["Payments", "/admin/finance/payments"], ["Messages", "/admin/messages"],
+  ["Academics", "/admin/academics"], ["Attendance", "/admin/attendance"], ["Staff", "/admin/staff"],
+  ["Inventory", "/admin/inventory"], ["Procurement", "/admin/procurement"], ["Visitors", "/admin/security/visitors"],
+  ["Communication", "/admin/communication"], ["Reports", "/admin/reports"], ["Calendar", "/admin/calendar"],
+  ["Discipline", "/admin/discipline"], ["Documents", "/admin/documents"], ["Certificates", "/admin/certificates"],
+  ["Governance", "/admin/governance"], ["Settings", "/admin/settings"], ["Intelligence", "/admin/ai"],
+  ["Architecture", "/admin/architecture"], ["Admissions setup", "/admin/admissions/settings"],
+];
+
 function AdminLayout() {
+  const navigate = useNavigate();
+  const qc = useQueryClient();
   return (
     <AuthGate
       title="Staff sign in"
@@ -28,10 +42,20 @@ function AdminLayout() {
                 </span>
                 <span>{siteConfig.name} Staff</span>
               </Link>
-              <div className="relative order-3 w-full md:order-none md:w-64">
+              <form
+                className="relative order-3 w-full md:order-none md:w-64"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const q = String(new FormData(e.currentTarget).get("q") ?? "").trim().toLowerCase();
+                  if (!q) return;
+                  const hit = sections.find(([label]) => label.toLowerCase().includes(q));
+                  void navigate({ to: hit ? hit[1] : "/admin/students" });
+                }}
+              >
                 <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
-                <Input className="h-9 bg-muted/40 pl-9" placeholder="Search authorised records" aria-label="Global search" />
-              </div>
+                <Input name="q" list="admin-sections" className="h-9 bg-muted/40 pl-9" placeholder="Jump to a section (Enter)" aria-label="Global search" />
+                <datalist id="admin-sections">{sections.map(([l]) => <option key={l} value={l} />)}</datalist>
+              </form>
               <nav
                 aria-label="Admin sections"
                 className="flex flex-wrap items-center gap-1 text-sm"
@@ -123,7 +147,12 @@ function AdminLayout() {
                 <Button asChild variant="ghost" size="sm">
                   <Link to="/">Website</Link>
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => void supabase.auth.signOut()}>
+                <Button variant="outline" size="sm" onClick={async () => {
+                  await qc.cancelQueries();
+                  qc.clear();
+                  await supabase.auth.signOut();
+                  void navigate({ to: "/admin", replace: true });
+                }}>
                   Sign out
                 </Button>
               </nav>
