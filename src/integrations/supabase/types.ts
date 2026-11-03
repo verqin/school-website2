@@ -412,7 +412,7 @@ export type Database = {
           status: Database["public"]["Enums"]["document_status"]
           storage_path: string
           updated_at: string
-          uploaded_by: string
+          uploaded_by: string | null
           verified_at: string | null
           verified_by: string | null
         }
@@ -429,7 +429,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["document_status"]
           storage_path: string
           updated_at?: string
-          uploaded_by: string
+          uploaded_by?: string | null
           verified_at?: string | null
           verified_by?: string | null
         }
@@ -446,7 +446,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["document_status"]
           storage_path?: string
           updated_at?: string
-          uploaded_by?: string
+          uploaded_by?: string | null
           verified_at?: string | null
           verified_by?: string | null
         }
