@@ -39,6 +39,7 @@ export function OperationsPage({ title, eyebrow, description, metrics, columns, 
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(0);
   const [open, setOpen] = useState(false);
+  const [editing, setEditing] = useState<{ id: string; cells: string[] } | null>(null);
 
   const recordsQuery = useQuery({
     queryKey: ["operations", module],
@@ -67,15 +68,31 @@ export function OperationsPage({ title, eyebrow, description, metrics, columns, 
   const current = Math.min(page, pages - 1);
   const visible = filtered.slice(current * PAGE_SIZE, current * PAGE_SIZE + PAGE_SIZE);
 
+  const statusCol = columns.length - 1;
+  const monthStart = new Date(); monthStart.setDate(1); monthStart.setHours(0, 0, 0, 0);
+  const countStatus = (list: string[]) => rows.filter((r) => list.includes((r.cells[statusCol] ?? "").toLowerCase())).length;
+  const liveMetrics = [
+    { label: "Total records", value: String(rows.length), detail: "Live from the school database" },
+    { label: "Active or pending", value: String(countStatus(["active", "pending", "open", "in progress"])), detail: "Still need attention" },
+    { label: "Completed or closed", value: String(countStatus(["completed", "closed", "done", "resolved"])), detail: "Finished" },
+    { label: "Added this month", value: String((recordsQuery.data ?? []).filter((r) => new Date(r.created_at) >= monthStart).length), detail: monthStart.toLocaleDateString(undefined, { month: "long", year: "numeric" }) },
+  ];
+  void metrics;
+
   const add = useMutation({
     mutationFn: async (values: Record<string, string>) => {
       const status = values[columns[columns.length - 1]!] || "Active";
-      const { error } = await supabase.from("operations_records").insert({ module, data: values, status });
+      const data = { ...values };
+      delete data[columns[columns.length - 1]!];
+      const { error } = editing
+        ? await supabase.from("operations_records").update({ data, status }).eq("id", editing.id)
+        : await supabase.from("operations_records").insert({ module, data, status });
       if (error) throw error;
     },
     onSuccess: () => {
-      toast.success("Record saved");
+      toast.success(editing ? "Record updated" : "Record saved");
       setOpen(false);
+      setEditing(null);
       void qc.invalidateQueries({ queryKey: ["operations", module] });
     },
     onError: () => toast.error("Could not save. You may not have permission for this."),
@@ -112,7 +129,7 @@ export function OperationsPage({ title, eyebrow, description, metrics, columns, 
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">{description}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button onClick={() => setOpen(true)}><Plus data-icon="inline-start" />Add record</Button>
+          <Button onClick={() => { setEditing(null); setOpen(true); }}><Plus data-icon="inline-start" />Add record</Button>
           <Button
             variant="outline"
             disabled={filtered.length === 0}
@@ -124,18 +141,23 @@ export function OperationsPage({ title, eyebrow, description, metrics, columns, 
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-2xl border bg-card p-5 shadow-sm">
-          <p className="text-sm text-muted-foreground">Records saved</p>
-          <p className="mt-2 text-3xl font-semibold text-primary">{rows.length}</p>
-          <p className="mt-1 text-xs text-muted-foreground">Live from the school database</p>
-        </div>
-        {metrics.slice(0, 3).map((metric) => (
+        {liveMetrics.map((metric) => (
           <div key={metric.label} className="rounded-2xl border bg-card p-5 shadow-sm">
             <p className="text-sm text-muted-foreground">{metric.label}</p>
             <p className="mt-2 text-3xl font-semibold text-primary">{metric.value}</p>
-            <p className="mt-1 text-xs text-muted-foreground">{metric.detail} (target)</p>
+            <p className="mt-1 text-xs text-muted-foreground">{metric.detail}</p>
           </div>
         ))}
+      </div>
+
+      <div className="mt-6 rounded-2xl border border-royal/20 bg-forest-soft p-5 text-sm leading-6">
+        <p className="font-semibold text-primary">How to use this page</p>
+        <ol className="mt-2 list-decimal space-y-1 pl-5 text-muted-foreground">
+          <li>Press <strong>Add record</strong> and fill in the boxes. Only "{columns[0]}" is required.</li>
+          <li>Choose a status: Active, Pending, Completed or Closed.</li>
+          <li>Press <strong>Edit</strong> on any row to correct it or change its status.</li>
+          <li>Use the search box to find a record, and <strong>Export</strong> to download a spreadsheet.</li>
+        </ol>
       </div>
 
       <div className="mt-8 rounded-2xl border bg-card p-5 shadow-sm">
@@ -165,7 +187,8 @@ export function OperationsPage({ title, eyebrow, description, metrics, columns, 
                   {row.cells.map((cell, i) => (
                     <td key={i} className="px-3 py-4">{i === row.cells.length - 1 ? <Badge variant="secondary">{cell}</Badge> : cell}</td>
                   ))}
-                  <td className="px-3 py-4 text-right">
+                  <td className="whitespace-nowrap px-3 py-4 text-right">
+                    <Button size="sm" variant="ghost" onClick={() => { setEditing(row); setOpen(true); }}>Edit</Button>
                     <Button size="icon" variant="ghost" aria-label="Remove record" onClick={() => { if (confirm("Remove this record?")) remove.mutate(row.id); }}>
                       <Trash2 className="size-4" />
                     </Button>
@@ -193,17 +216,23 @@ export function OperationsPage({ title, eyebrow, description, metrics, columns, 
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
-          <DialogHeader><DialogTitle>Add record - {title}</DialogTitle></DialogHeader>
-          <form id={`form-${module}`} onSubmit={submit} className="grid gap-3">
+          <DialogHeader><DialogTitle>{editing ? "Edit record" : "Add record"} - {title}</DialogTitle></DialogHeader>
+          <form key={editing?.id ?? "new"} id={`form-${module}`} onSubmit={submit} className="grid gap-3">
             {columns.map((c, i) => (
               <div key={c} className="grid gap-1.5">
                 <Label htmlFor={`f-${c}`}>{c}{i === 0 ? " *" : ""}</Label>
-                <Input id={`f-${c}`} name={c} placeholder={i === columns.length - 1 ? "Active" : ""} maxLength={300} />
+                {i === columns.length - 1 ? (
+                  <select id={`f-${c}`} name={c} defaultValue={editing?.cells[i] ?? "Active"} className="h-9 rounded-md border bg-background px-3 text-sm">
+                    {["Active", "Pending", "Completed", "Closed"].map((o) => <option key={o} value={o}>{o}</option>)}
+                  </select>
+                ) : (
+                  <Input id={`f-${c}`} name={c} defaultValue={editing?.cells[i] ?? ""} maxLength={300} />
+                )}
               </div>
             ))}
           </form>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button variant="outline" onClick={() => { setOpen(false); setEditing(null); }}>Cancel</Button>
             <Button type="submit" form={`form-${module}`} disabled={add.isPending}>{add.isPending ? "Saving..." : "Save record"}</Button>
           </DialogFooter>
         </DialogContent>
