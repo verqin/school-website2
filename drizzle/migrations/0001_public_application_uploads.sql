@@ -1,0 +1,2 @@
+ALTER TABLE public.application_documents ALTER COLUMN uploaded_by DROP NOT NULL;
+COMMENT ON COLUMN public.application_documents.uploaded_by IS 'NULL when uploaded through the account-free public application form';

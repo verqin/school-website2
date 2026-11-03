@@ -8,6 +8,13 @@
       "when": 1790957016586,
       "tag": "0000_operations_records",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793742645475,
+      "tag": "0001_public_application_uploads",
+      "breakpoints": true
     }
   ]
 }

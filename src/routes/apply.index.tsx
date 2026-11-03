@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { STATUS_LABELS, type ApplicationStatus } from "@/lib/admissions";
-import { submitPublicApplication, trackPublicApplication } from "@/lib/public-apply.functions";
+import { submitPublicApplication, trackPublicApplication, uploadPublicApplicationDocument } from "@/lib/public-apply.functions";
 
 const title = "Apply to Cresta Reign Academy";
 const description =
@@ -46,6 +46,7 @@ function ApplyPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [reference, setReference] = useState<string | null>(null);
+  const [appId, setAppId] = useState<string | null>(null);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -75,6 +76,7 @@ function ApplyPage() {
         },
       });
       setReference(result.reference);
+      setAppId(result.id);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (submitError) {
       setError(
@@ -100,6 +102,7 @@ function ApplyPage() {
           <p className="mt-6 rounded-2xl bg-navy-soft px-6 py-4 text-2xl font-bold tracking-wider text-purple">
             {reference}
           </p>
+          {appId && <DocumentUpload applicationId={appId} reference={reference} />}
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button asChild variant="outline">
               <Link to="/">Back to website</Link>
@@ -305,6 +308,43 @@ function Field({
         {required ? " *" : ""}
       </Label>
       <Input id={id} name={id} type={type} required={required} maxLength={300} />
+    </div>
+  );
+}
+
+function DocumentUpload({ applicationId, reference }: { applicationId: string; reference: string }) {
+  const upload = useServerFn(uploadPublicApplicationDocument);
+  const [busy, setBusy] = useState(false);
+  const [done, setDone] = useState<string[]>([]);
+  const [msg, setMsg] = useState("");
+
+  async function onFiles(files: FileList | null) {
+    if (!files) return;
+    setBusy(true);
+    setMsg("");
+    for (const file of Array.from(files)) {
+      if (file.size > 5 * 1024 * 1024) { setMsg(`${file.name} is larger than 5 MB.`); continue; }
+      try {
+        const buf = new Uint8Array(await file.arrayBuffer());
+        let bin = "";
+        for (let i = 0; i < buf.length; i += 0x8000) bin += String.fromCharCode(...buf.subarray(i, i + 0x8000));
+        await upload({ data: { application_id: applicationId, reference, file_name: file.name, mime_type: file.type, base64: btoa(bin) } });
+        setDone((d) => [...d, file.name]);
+      } catch (e) {
+        setMsg(e instanceof Error ? e.message : `Could not upload ${file.name}.`);
+      }
+    }
+    setBusy(false);
+  }
+
+  return (
+    <div className="mt-8 rounded-2xl border bg-muted/30 p-5 text-left">
+      <p className="font-semibold text-purple">Upload supporting documents (optional)</p>
+      <p className="mt-1 text-sm text-muted-foreground">Birth certificate, latest school report, transfer letter or photos. PDF or image, up to 5 MB each. You still bring the originals to the office.</p>
+      <Input className="mt-3" type="file" multiple accept="application/pdf,image/jpeg,image/png,image/webp" disabled={busy} onChange={(e) => void onFiles(e.target.files)} aria-label="Upload documents" />
+      {busy && <p className="mt-2 text-sm text-muted-foreground">Uploading...</p>}
+      {msg && <p className="mt-2 text-sm text-destructive">{msg}</p>}
+      {done.length > 0 && <ul className="mt-3 list-disc pl-5 text-sm text-secondary">{done.map((n, i) => <li key={i}>{n} - received</li>)}</ul>}
     </div>
   );
 }

@@ -30,7 +30,7 @@ const PAGE_SIZE = 10;
  * Generic staff register. Records are stored in the operations_records table
  * (one "module" per page) and protected by staff-only RLS.
  */
-const missingRoutes = new Set(["/admin/academics/analytics", "/admin/academics/assessments", "/admin/academics/report-cards", "/admin/attendance/analytics", "/admin/communication/new", "/admin/finance/outstanding", "/admin/staff/teacher-assignments"]);
+const missingRoutes = new Set<string>([]);
 
 export function OperationsPage({ title, eyebrow, description, metrics, columns, related: relatedIn = [], note }: OperationsPageProps) {
   const related = relatedIn.filter((r) => !missingRoutes.has(r.to));
