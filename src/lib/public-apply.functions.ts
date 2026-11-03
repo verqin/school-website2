@@ -97,3 +97,43 @@ export const trackPublicApplication = createServerFn({ method: "POST" })
     if (!row) return null;
     return row;
   });
+
+const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
+const uploadSchema = z.object({
+  application_id: z.string().uuid(),
+  reference: z.string().trim().min(3).max(40),
+  file_name: z.string().trim().min(1).max(160),
+  mime_type: z.string().refine((t) => ALLOWED_TYPES.includes(t), "Only PDF or image files"),
+  base64: z.string().min(1).max(7_000_000), // about 5 MB
+});
+
+/** Attach one supporting document to a just-submitted public application. */
+export const uploadPublicApplicationDocument = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => uploadSchema.parse(input))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    // The caller must know both the id and reference of a recently submitted application.
+    const { data: app } = await supabaseAdmin
+      .from("applications")
+      .select("id, submitted_at")
+      .eq("id", data.application_id)
+      .eq("reference_code", data.reference.toUpperCase())
+      .maybeSingle();
+    if (!app || !app.submitted_at || Date.now() - new Date(app.submitted_at).getTime() > 2 * 60 * 60 * 1000) {
+      throw new Error("Uploads are only possible right after sending the application.");
+    }
+    const { count } = await supabaseAdmin.from("application_documents").select("id", { count: "exact", head: true }).eq("application_id", app.id);
+    if ((count ?? 0) >= 10) throw new Error("A maximum of 10 documents can be attached.");
+    const bytes = Uint8Array.from(atob(data.base64), (c) => c.charCodeAt(0));
+    if (bytes.byteLength > 5 * 1024 * 1024) throw new Error("Each file must be 5 MB or smaller.");
+    const safe = data.file_name.replace(/[^a-zA-Z0-9._-]+/g, "_");
+    const path = `public/${app.id}/${crypto.randomUUID()}-${safe}`;
+    const { error: upErr } = await supabaseAdmin.storage.from("application-documents").upload(path, bytes, { contentType: data.mime_type });
+    if (upErr) throw new Error("Upload failed. Please try again.");
+    const { error } = await supabaseAdmin.from("application_documents").insert({
+      application_id: app.id, doc_type: "supporting", file_name: data.file_name, mime_type: data.mime_type,
+      size_bytes: bytes.byteLength, storage_path: path, status: "pending", uploaded_by: null,
+    });
+    if (error) throw new Error("Could not save the document.");
+    return { ok: true };
+  });
