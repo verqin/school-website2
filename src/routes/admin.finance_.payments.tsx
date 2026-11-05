@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { OperationsPage, pageMeta, sampleRows } from "@/components/admin/OperationsPage";
+export const Route = createFileRoute("/admin/finance/payments")({ ssr:false, head:()=>pageMeta("Payments"), component:()=> <OperationsPage eyebrow="Bursar office" title="Payments" description="Record, allocate and verify day-school fee payments with a clear receipt trail." metrics={[]} columns={["Receipt","Student","Amount","Method","Date","Status"]} rows={sampleRows.payments} related={[{label:"Finance overview",to:"/admin/finance"},{label:"Outstanding",to:"/admin/finance/outstanding"}]} note="Every payment mutation should be permission-controlled and auditable." /> });
