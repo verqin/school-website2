@@ -11,6 +11,8 @@ import {
 import { AuthGate } from "@/components/admissions/AuthGate";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ManualButton } from "@/components/ManualView";
+import { parentManual } from "@/lib/manuals";
 
 export const Route = createFileRoute("/parent")({
   ssr: false,
@@ -45,9 +47,12 @@ function ParentDashboard() {
             A clear view of your child&apos;s school day, academic progress and account.
           </p>
         </div>
-        <Button variant="outline">
-          <MessageSquare className="size-4" /> Contact school
-        </Button>
+        <div className="flex gap-2">
+          <ManualButton manual={parentManual} />
+          <Button variant="outline">
+            <MessageSquare className="size-4" /> Contact school
+          </Button>
+        </div>
       </div>
       <section className="mt-8 rounded-2xl border bg-card p-6 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-4">

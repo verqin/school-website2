@@ -37,6 +37,7 @@ import { Route as AdminDocumentsRouteImport } from './routes/admin.documents'
 import { Route as AdminFinanceRouteImport } from './routes/admin.finance'
 import { Route as AdminGovernanceRouteImport } from './routes/admin.governance'
 import { Route as AdminInventoryRouteImport } from './routes/admin.inventory'
+import { Route as AdminManualRouteImport } from './routes/admin.manual'
 import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
 import { Route as AdminProcurementRouteImport } from './routes/admin.procurement'
 import { Route as AdminReportsRouteImport } from './routes/admin.reports'
@@ -201,6 +202,11 @@ const AdminInventoryRoute = AdminInventoryRouteImport.update({
   path: '/inventory',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminManualRoute = AdminManualRouteImport.update({
+  id: '/manual',
+  path: '/manual',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminMessagesRoute = AdminMessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
@@ -353,6 +359,7 @@ export interface FileRoutesByFullPath {
   '/admin/finance': typeof AdminFinanceRoute
   '/admin/governance': typeof AdminGovernanceRoute
   '/admin/inventory': typeof AdminInventoryRoute
+  '/admin/manual': typeof AdminManualRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/procurement': typeof AdminProcurementRoute
   '/admin/reports': typeof AdminReportsRoute
@@ -403,6 +410,7 @@ export interface FileRoutesByTo {
   '/admin/finance': typeof AdminFinanceRoute
   '/admin/governance': typeof AdminGovernanceRoute
   '/admin/inventory': typeof AdminInventoryRoute
+  '/admin/manual': typeof AdminManualRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/procurement': typeof AdminProcurementRoute
   '/admin/reports': typeof AdminReportsRoute
@@ -458,6 +466,7 @@ export interface FileRoutesById {
   '/admin/finance': typeof AdminFinanceRoute
   '/admin/governance': typeof AdminGovernanceRoute
   '/admin/inventory': typeof AdminInventoryRoute
+  '/admin/manual': typeof AdminManualRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/procurement': typeof AdminProcurementRoute
   '/admin/reports': typeof AdminReportsRoute
@@ -514,6 +523,7 @@ export interface FileRouteTypes {
     | '/admin/finance'
     | '/admin/governance'
     | '/admin/inventory'
+    | '/admin/manual'
     | '/admin/messages'
     | '/admin/procurement'
     | '/admin/reports'
@@ -564,6 +574,7 @@ export interface FileRouteTypes {
     | '/admin/finance'
     | '/admin/governance'
     | '/admin/inventory'
+    | '/admin/manual'
     | '/admin/messages'
     | '/admin/procurement'
     | '/admin/reports'
@@ -618,6 +629,7 @@ export interface FileRouteTypes {
     | '/admin/finance'
     | '/admin/governance'
     | '/admin/inventory'
+    | '/admin/manual'
     | '/admin/messages'
     | '/admin/procurement'
     | '/admin/reports'
@@ -850,6 +862,13 @@ declare module '@tanstack/react-router' {
       path: '/inventory'
       fullPath: '/admin/inventory'
       preLoaderRoute: typeof AdminInventoryRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/manual': {
+      id: '/admin/manual'
+      path: '/manual'
+      fullPath: '/admin/manual'
+      preLoaderRoute: typeof AdminManualRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/messages': {
@@ -1101,6 +1120,7 @@ interface AdminRouteChildren {
   AdminFinanceRoute: typeof AdminFinanceRoute
   AdminGovernanceRoute: typeof AdminGovernanceRoute
   AdminInventoryRoute: typeof AdminInventoryRoute
+  AdminManualRoute: typeof AdminManualRoute
   AdminMessagesRoute: typeof AdminMessagesRoute
   AdminProcurementRoute: typeof AdminProcurementRoute
   AdminReportsRoute: typeof AdminReportsRoute
@@ -1135,6 +1155,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminFinanceRoute: AdminFinanceRoute,
   AdminGovernanceRoute: AdminGovernanceRoute,
   AdminInventoryRoute: AdminInventoryRoute,
+  AdminManualRoute: AdminManualRoute,
   AdminMessagesRoute: AdminMessagesRoute,
   AdminProcurementRoute: AdminProcurementRoute,
   AdminReportsRoute: AdminReportsRoute,

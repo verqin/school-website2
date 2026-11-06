@@ -3,6 +3,8 @@ import { BookOpen, CalendarCheck, ClipboardPenLine, FilePlus2, Users } from "luc
 import { AuthGate } from "@/components/admissions/AuthGate";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ManualButton } from "@/components/ManualView";
+import { teacherManual } from "@/lib/manuals";
 
 export const Route = createFileRoute("/teacher")({
   ssr: false,
@@ -46,9 +48,12 @@ function TeacherDashboard() {
             workspace.
           </p>
         </div>
-        <Button>
-          <FilePlus2 className="size-4" /> New assignment
-        </Button>
+        <div className="flex gap-2">
+          <ManualButton manual={teacherManual} />
+          <Button>
+            <FilePlus2 className="size-4" /> New assignment
+          </Button>
+        </div>
       </div>
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Metric label="Assigned classes" value="4" icon={Users} detail="Forms 2A-4B" />
