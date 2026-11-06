@@ -20,7 +20,7 @@ const sections: [string, string][] = [
   ["Communication", "/admin/communication"], ["Reports", "/admin/reports"], ["Calendar", "/admin/calendar"],
   ["Discipline", "/admin/discipline"], ["Documents", "/admin/documents"], ["Certificates", "/admin/certificates"],
   ["Governance", "/admin/governance"], ["Settings", "/admin/settings"], ["Intelligence", "/admin/ai"],
-  ["Architecture", "/admin/architecture"], ["Admissions setup", "/admin/admissions/settings"],
+  ["Architecture", "/admin/architecture"], ["Admissions setup", "/admin/admissions/settings"], ["User manual", "/admin/manual"],
 ];
 
 function AdminLayout() {
@@ -142,6 +142,11 @@ function AdminLayout() {
                 <Button asChild variant="ghost" size="sm">
                   <Link to="/admin/admissions/settings" activeProps={{ className: "bg-accent" }}>
                     Admissions setup
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/admin/manual" activeProps={{ className: "bg-accent" }}>
+                    User manual
                   </Link>
                 </Button>
                 <Button asChild variant="ghost" size="sm">
