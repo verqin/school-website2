@@ -65,7 +65,7 @@ export function AuthGate({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/apply`,
+          emailRedirectTo: `${window.location.origin}${window.location.pathname}`,
           data: { full_name: fullName },
         },
       });
@@ -73,8 +73,8 @@ export function AuthGate({
       if (signUpError) {
         setError(
           signUpError.message.includes("confirm")
-            ? "Check your email to confirm your application account."
-            : "We could not create that application account. Please check your details and try again.",
+            ? "Check your email to confirm your account, then sign in."
+            : "We could not create that account. Please check your details and try again.",
         );
         return;
       }
