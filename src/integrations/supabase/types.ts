@@ -3625,6 +3625,7 @@ export type Database = {
     }
     Functions: {
       can: { Args: { _permission: string }; Returns: boolean }
+      claim_portal_links: { Args: never; Returns: Json }
       current_guardian_id: { Args: never; Returns: string }
       current_staff_id: { Args: never; Returns: string }
       current_student_id: { Args: never; Returns: string }
